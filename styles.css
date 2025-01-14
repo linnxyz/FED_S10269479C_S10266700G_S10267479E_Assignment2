@@ -1,0 +1,223 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+    --primary-color: #18181b;
+    --text-color: #27272a;
+    --border-color: #e4e4e7;
+    --error-color: #ef4444;
+    --success-color: #22c55e;
+}
+
+body {
+    background-color: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    margin: 2rem;
+}
+
+.auth-container {
+    max-width: 500px;
+    width: 90%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.5px;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.auth-tab {
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.auth-tab.active {
+    border-bottom-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(24, 24, 27, 0.1);
+}
+
+.fg-password {
+    color: rgb(157, 157, 157);
+    text-decoration: none;
+}
+
+.password-requirements {
+    margin-top: 10px;
+}
+
+.requirement {
+    color: gray; /* Default color for unmet requirements */
+}
+
+.requirement.valid {
+    color: rgb(90, 196, 90); /* Color for met requirements */
+}
+
+.password-requirements {
+    display: none;
+    font-size: 12px;
+    padding-left: 12px;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.submit-button:hover {
+    transform: translateY(-1px);
+}
+
+#authSwitchLink {
+    text-align: center; 
+    margin-top: 20px;
+    color: gray;
+}
+
+.message {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    display: none;
+}
+
+.error {
+    background-color: #fef2f2;
+    color: var(--error-color);
+    border: 1px solid #fecaca;
+}
+
+.success {
+    background-color: #f0fdf4;
+    color: var(--success-color);
+    border: 1px solid #bbf7d0;
+}
+
+
+#countryDropdown {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    background-color: white;
+    transition: all 0.2s;
+}
+
+#countryDropdown:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(24, 24, 27, 0.1);
+}
+
+.showPasswordContainer {
+    padding-top: 10px;
+    font-size: 15px;
+}
+
+.alert-container {
+    position: fixed;
+    top: -100px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: top 0.5s ease-in-out;
+    padding: 0 20px;
+}
+
+.alert {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 40px 15px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.alert.error {
+    background-color: #f44336;
+}
+
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

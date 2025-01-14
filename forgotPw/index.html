@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email</title>
+    <script>
+        async function sendEmail() {
+            const emailData = {
+                to: "linnthitg@gmail.com", // Replace with the recipient's email
+                subject: "Hello from MokeSell!",
+                message: "Thank you for signing up on our platform."
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(emailData)
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('Email sent successfully!');
+                } else {
+                    alert('Failed to send email: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error sending email:', error);
+                alert('Error sending email');
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="sendEmail()">Send Email</button>
+</body>
+</html>

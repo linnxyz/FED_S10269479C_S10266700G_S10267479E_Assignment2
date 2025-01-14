@@ -4,161 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In - SecondLife</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
 
-        :root {
-            --primary-color: #18181b;
-            --text-color: #27272a;
-            --border-color: #e4e4e7;
-            --error-color: #ef4444;
-            --success-color: #22c55e;
-        }
-
-        body {
-            background-color: #f8fafc;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-            margin: 2rem;
-        }
-
-        .auth-container {
-            max-width: 400px;
-            width: 90%;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 1rem;
-            border: 1px solid var(--border-color);
-        }
-
-        .auth-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.5px;
-        }
-
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .auth-tab {
-            padding: 0.75rem 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .auth-tab.active {
-            border-bottom-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            transition: all 0.2s;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(24, 24, 27, 0.1);
-        }
-
-        .submit-button {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .submit-button:hover {
-            transform: translateY(-1px);
-        }
-
-        .message {
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            display: none;
-        }
-
-        .error {
-            background-color: #fef2f2;
-            color: var(--error-color);
-            border: 1px solid #fecaca;
-        }
-
-        .success {
-            background-color: #f0fdf4;
-            color: var(--success-color);
-            border: 1px solid #bbf7d0;
-        }
-
-        
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <a href="/" class="logo">secondlife</a>
 
+    <a href="/" class="logo">secondlife</a>
     <div class="auth-container">
         <h1 class="auth-title">Welcome back</h1>
-        
-        <div class="auth-tabs">
-            <div class="auth-tab active" onclick="switchTab('signin')">Sign In</div>
-            <div class="auth-tab" onclick="switchTab('signup')">Sign Up</div>
-        </div>
-
         <div id="message" class="message"></div>
-
         <form id="authForm" onsubmit="handleSubmit(event)">
-            <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" class="form-input" required>
-            </div>
 
-            <div class="form-group">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" class="form-input" required>
+            <div id="countryField" class="form-group" style="display: none;">
+                <label for="countryDropdown" class="form-label">Select your location</label>
+                <select id="countryDropdown">
+                    <option value="" disabled selected>Choose a country</option>
+                </select>
             </div>
 
             <div id="nameField" class="form-group" style="display: none;">
@@ -166,111 +27,50 @@
                 <input type="text" id="name" class="form-input">
             </div>
 
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-input" required>
+                <p class="email-error"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-input" required>
+                <p class="password-error"></p>
+                <a href="#" class="fg-password">Forgot password?</a>
+                <div id="passwordRequirements" class="password-requirements">
+                    <ul>
+                        <li id="lengthRequirement" class="requirement">Minimum length of 8 characters</li>
+                        <li id="uppercaseRequirement" class="requirement">At least 1 uppercase letter</li>
+                        <li id="numberRequirement" class="requirement">At least 1 number</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="confirmPassword" class="form-group" style="display: none;">
+                <label for="confirmPassword" class="form-label">Confirm password</label>
+                <input id="cfPw" type="Password" class="form-input">
+
+                <p class="confirmPassword-error"></p>
+
+                <div class="showPasswordContainer">
+                    <input type="checkbox" id="showPasswordCheckbox">
+                    <label for="showPasswordCheckbox">Show Password</label>
+                </div>
+            </div>
+
+
+            
+
             <button type="submit" class="submit-button">Sign In</button>
         </form>
+        <div id="authSwitchLink">
+
+            Don't have an account? <a href="#" onclick="switchAuthMode()" style="color: var(--primary-color); ">Create account</a>
+
+        </div>
     </div>
 
-    <script>
-        // Replace with your RestDB API key
-        const RESTDB_API_KEY = '677f31d996bc7400895f1141';
-        const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/accounts';
-        
-        let currentMode = 'signin';
-
-        function switchTab(mode) {
-            currentMode = mode;
-            const tabs = document.querySelectorAll('.auth-tab');
-            const nameField = document.getElementById('nameField');
-            const submitButton = document.querySelector('.submit-button');
-            const title = document.querySelector('.auth-title');
-
-            tabs.forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-
-            if (mode === 'signup') {
-                nameField.style.display = 'block';
-                submitButton.textContent = 'Sign Up';
-                title.textContent = 'Create account';
-            } else {
-                nameField.style.display = 'none';
-                submitButton.textContent = 'Sign In';
-                title.textContent = 'Welcome back';
-            }
-        }
-
-        function showMessage(text, type) {
-            const message = document.getElementById('message');
-            message.textContent = text;
-            message.className = `message ${type}`;
-            message.style.display = 'block';
-        }
-
-        async function handleSubmit(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const name = document.getElementById('name').value;
-
-            try {
-                if (currentMode === 'signup') {
-                    // Check if user already exists
-                    const checkUser = await fetch(`${RESTDB_URL}?q={"email":"${email}"}`, {
-                        headers: {
-                            'x-apikey': RESTDB_API_KEY
-                        }
-                    });
-                    const existingUser = await checkUser.json();
-
-                    if (existingUser.length > 0) {
-                        showMessage('Email already registered', 'error');
-                        return;
-                    }
-
-                    // Create new user
-                    const response = await fetch(RESTDB_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'x-apikey': RESTDB_API_KEY
-                        },
-                        body: JSON.stringify({
-                            email,
-                            password, // Note: In a real application, password should be hashed
-                            name,
-                            createdAt: new Date()
-                        })
-                    });
-
-                    if (response.ok) {
-                        showMessage('Account created successfully!', 'success');
-                        setTimeout(() => window.location.href = '/', 1500);
-                    } else {
-                        showMessage('Error creating account', 'error');
-                    }
-                } else {
-                    // Sign in
-                    const response = await fetch(`${RESTDB_URL}?q={"email":"${email}","password":"${password}"}`, {
-                        headers: {
-                            'x-apikey': RESTDB_API_KEY
-                        }
-                    });
-                    const user = await response.json();
-
-                    if (user.length > 0) {
-                        // Store user session
-                        localStorage.setItem('user', JSON.stringify(user[0]));
-                        showMessage('Signed in successfully!', 'success');
-                        setTimeout(() => window.location.href = '/', 1500);
-                    } else {
-                        showMessage('Invalid email or password', 'error');
-                    }
-                }
-            } catch (error) {
-                showMessage('An error occurred', 'error');
-                console.error('Error:', error);
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
