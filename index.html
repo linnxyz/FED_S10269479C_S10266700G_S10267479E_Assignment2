@@ -3,40 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - SecondLife</title>
+    <title>Sign In - MokeSell</title>
 
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <a href="/" class="logo">secondlife</a>
+    <div class="background-pattern"></div>
+    <img class="logo" src="images/logo.png" alt="MokeSell Logo">
+    
     <div class="auth-container">
+
         <h1 class="auth-title">Welcome back</h1>
         <div id="message" class="message"></div>
         <form id="authForm" onsubmit="handleSubmit(event)">
 
             <div id="countryField" class="form-group" style="display: none;">
-                <label for="countryDropdown" class="form-label">Select your location</label>
+                <label for="countryDropdown" class="form-label">Select your location <span class="asterisk">*</span></label>
                 <select id="countryDropdown">
-                    <option value="" disabled selected>Choose a country</option>
+                    <option value="" disabled selected>Select a country</option>
                 </select>
+                <p class="country-error inlineError"></p>
             </div>
 
             <div id="nameField" class="form-group" style="display: none;">
-                <label for="name" class="form-label">Full Name</label>
+                <label for="name" class="form-label">Full Name <span class="asterisk">*</span></label>
                 <input type="text" id="name" class="form-input">
+                <p class="name-error inlineError"></p>
             </div>
 
             <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" class="form-input" required>
-                <p class="email-error"></p>
+                <label for="email" class="form-label">Email <span class="asterisk">*</span></label>
+                <input type="text" id="email" class="form-input">
+                <p class="email-error inlineError"></p>
             </div>
 
             <div class="form-group">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" class="form-input" required>
-                <p class="password-error"></p>
+                <label for="password" class="form-label">Password <span class="asterisk">*</span></label>
+                <input type="password" id="password" class="form-input">
+                <p class="password-error inlineError"></p>
                 <a href="#" class="fg-password">Forgot password?</a>
                 <div id="passwordRequirements" class="password-requirements">
                     <ul>
@@ -46,12 +50,12 @@
                     </ul>
                 </div>
             </div>
-
+            
             <div id="confirmPassword" class="form-group" style="display: none;">
-                <label for="confirmPassword" class="form-label">Confirm password</label>
+                <label for="confirmPassword" class="form-label">Confirm password <span class="asterisk">*</span></label>
                 <input id="cfPw" type="Password" class="form-input">
 
-                <p class="confirmPassword-error"></p>
+                <p class="confirmPassword-error inlineError"></p>
 
                 <div class="showPasswordContainer">
                     <input type="checkbox" id="showPasswordCheckbox">

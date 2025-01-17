@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Input Words</title>
+
+    <link rel="stylesheet" href="captchaStyle.css">
+</head>
+<body>
+
+    <img class="logo" src="../images/mokesell-captcha.png" alt="MokeSell Captcha Logo">
+
+    <div class="loader-container">
+        <div class="loader">
+            <dotlottie-player src="https://lottie.host/b3bd4ec0-883e-454b-ba33-620d03fb236a/dmtJz8xIVI.lottie" background="transparent" speed="1" loop autoplay></dotlottie-player>
+            <p>Loading..</p>
+        </div>
+    </div>
+    <div class="container">
+        <img id="captchaImage" class="captcha-image" src="" alt="Image unable to load">
+    
+        <h1>Prove you are a human</h1>
+        <div class="description">
+            <p>Describe what you see</p>
+        </div>
+    
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Minimum 3 words...">
+            <div class="message" id="message"></div>
+            <button id="generateAnother" class="generate-another" onclick="generate()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                </svg>
+                Generate another
+            </button>
+        </div>
+
+    </div>
+
+
+    <script src="captchaScript.js"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</body>
+</html>
+
+

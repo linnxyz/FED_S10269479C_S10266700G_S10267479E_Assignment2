@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Page</title>
+
+    <link rel="stylesheet" href="logStyle.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <img src="../images/logo.png" alt="MokeSell Logo" class="logo">
+            <div class="search-bar">
+                <input type="text" placeholder="Search products..." id="searchInput">
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-button" id="dropdownButton">Select Condition</button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <div class="dropdown-item" data-value="new">New</div>
+                    <div class="dropdown-item" data-value="like-new">Like New</div>
+                    <div class="dropdown-item" data-value="lightly-used">Lightly Used</div>
+                    <div class="dropdown-item" data-value="moderately-used">Moderately Used</div>
+                    <div class="dropdown-item" data-value="well-used">Well Used</div>
+                </div>
+            </div>
+            <div class="nav-icons">
+                <div class="profile">👤</div>
+                <div class="cart">🛒</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="trending-section">
+            <h2 class="section-title">Trending Products</h2>
+            <div class="trending-products" id="trendingProducts">
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <div class="product-header">
+                            <h3>Asus Vivobook</h3>
+                            <div class="like-container">
+                                <div class="like-button">
+                                    <svg class="heart-stroke" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-heart" viewBox="0 0 16 16">
+                                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                    </svg>
+                                    <svg class="heart-filled" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                    </svg>
+                                </div>
+                                <span class="like-count">0</span>
+                            </div>
+                        </div>
+                        <p class="product-description">This is so cool</p>
+                        <div class="tags">
+                            <span class="condition-tag">Like new</span>
+                            <span class="category-tag">Computer</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="price">$100</div>
+                            <div class="more">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                                </svg>
+                                <!-- Dropdown Menu -->
+                                <div class="more-report" style="display: none;">
+                                    <button class="report-post">Report Post</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <div class="product-header">
+                            <h3>Asus Vivobook</h3>
+                            <div class="like-container">
+                                <div class="like-button">
+                                    <svg class="heart-stroke" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-heart" viewBox="0 0 16 16">
+                                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                    </svg>
+                                    <svg class="heart-filled" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                    </svg>
+                                </div>
+                                <span class="like-count">0</span>
+                            </div>
+                        </div>
+                        <p class="product-description">This is so cool</p>
+                        <div class="tags">
+                            <span class="condition-tag">Like new</span>
+                            <span class="category-tag">Computer</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="price">$100</div>
+                            <div class="likes">❤️ 10</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3>Asus Vivobook</h3>
+                        <p class="product-description">This is so cool</p>
+                        <div class="tags">
+                            <span class="condition-tag">Like new</span>
+                            <span class="category-tag">Computer</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="price">$100</div>
+                            <div class="likes">❤️ 10</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3>Asus Vivobook</h3>
+                        <p class="product-description">This is so cool</p>
+                        <div class="tags">
+                            <span class="condition-tag">Like new</span>
+                            <span class="category-tag">Computer</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="price">$100</div>
+                            <div class="likes">❤️ 10</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <section class="general-section">
+            <h2 class="section-title">All Products</h2>
+            <div class="products-grid" id="productsGrid">
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3>Asus Vivobook</h3>
+                        <p class="product-description">This is so cool</p>
+                        <div class="tags">
+                            <span class="condition-tag">Like new</span>
+                            <span class="category-tag">Computer</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="price">$100</div>
+                            <div class="likes">❤️ 10</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3>Asus Vivobook</h3>
+                        <p class="product-description">This is so cool</p>
+                        <div class="tags">
+                            <span class="condition-tag">Like new</span>
+                            <span class="category-tag">Computer</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="price">$100</div>
+                            <div class="likes">❤️ 10</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3>Asus Vivobook</h3>
+                        <p class="product-description">This is so cool</p>
+                        <div class="tags">
+                            <span class="condition-tag">Like new</span>
+                            <span class="category-tag">Computer</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="price">$100</div>
+                            <div class="likes">❤️ 10</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3>Asus Vivobook</h3>
+                        <p class="product-description">This is so cool</p>
+                        <div class="tags">
+                            <span class="condition-tag">Like new</span>
+                            <span class="category-tag">Computer</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="price">$100</div>
+                            <div class="likes">❤️ 10</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3>Asus Vivobook</h3>
+                        <p class="product-description">This is so cool</p>
+                        <div class="tags">
+                            <span class="condition-tag">Like new</span>
+                            <span class="category-tag">Computer</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="price">$100</div>
+                            <div class="likes">❤️ 10</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <h3>Asus Vivobook</h3>
+                        <p class="product-description">This is so cool</p>
+                        <div class="tags">
+                            <span class="condition-tag">Like new</span>
+                            <span class="category-tag">Computer</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="price">$100</div>
+                            <div class="likes">❤️ 10</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="loading" id="loading">Loading more products...</div>
+    </div>
+
+    <script src="logScript.js"></script>
+</body>
+</html>

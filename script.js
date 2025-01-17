@@ -10,6 +10,7 @@ const nameField = document.getElementById('nameField');
 const forgotPassword = document.querySelector('.fg-password');
 const passwordRequirements = document.querySelector('.password-requirements');
 const submitButton = document.querySelector('.submit-button');
+const authContainer = document.querySelector('.auth-container');
 
 
 const alertContainer = document.createElement('div');
@@ -19,45 +20,45 @@ document.body.appendChild(alertContainer);
 let activeTimeout;
 
 function showAlert(message, type = 'success', duration = 5000) {
-  // Clear any existing alerts
-  alertContainer.innerHTML = '';
-  
-  // Create alert element
-  const alert = document.createElement('div');
-  alert.className = `alert ${type}`;
-  
-  // Add message
-  alert.innerHTML = `
+    // Clear any existing alerts
+    alertContainer.innerHTML = '';
+
+    // Create alert element
+    const alert = document.createElement('div');
+    alert.className = `alert ${type}`;
+
+    // Add message
+    alert.innerHTML = `
     ${message}
     <button class="close-btn" onclick="closeAlert()">&times;</button>
-  `;
-  
-  // Add alert to container
-  alertContainer.appendChild(alert);
-  
-  // Show alert
-  setTimeout(() => {
+    `;
+
+    // Add alert to container
+    alertContainer.appendChild(alert);
+
+    // Show alert
+    setTimeout(() => {
     alertContainer.style.top = '20px';
-  }, 100);
-  
-  // Clear any existing timeout
-  if (activeTimeout) {
+    }, 100);
+
+    // Clear any existing timeout
+    if (activeTimeout) {
     clearTimeout(activeTimeout);
-  }
-  
-  // Auto-hide after duration
-  activeTimeout = setTimeout(() => {
+    }
+
+    // Auto-hide after duration
+    activeTimeout = setTimeout(() => {
     closeAlert();
-  }, duration);
+    }, duration);
 }
 
 function closeAlert() {
-  alertContainer.style.top = '-100px';
-  
-  // Clear timeout if exists
-  if (activeTimeout) {
+    alertContainer.style.top = '-100px';
+
+    // Clear timeout if exists
+    if (activeTimeout) {
     clearTimeout(activeTimeout);
-  }
+    }
 }
 
 
@@ -66,6 +67,14 @@ function switchAuthMode() {
 
     // Toggle mode
     currentMode = isSignIn ? 'signup' : 'signin';
+    if (currentMode != 'signin') {
+        authContainer.style.maxWidth = '600px';
+        authContainer.style.marginTop = '20px';
+    }
+    else {
+        authContainer.style.maxWidth = '500px';
+        authContainer.style.marginTop = '130px';
+    }
 
     // Update UI elements based on the current mode
     nameField.style.display = isSignIn ? 'block' : 'none';
@@ -94,6 +103,15 @@ async function checkEmail(email) {
     }
 }
 
+function isValidPassword(password) {
+    // Regular expression to check the conditions:
+    // - At least 8 characters long
+    // - Contains at least one uppercase letter
+    // - Contains at least one number
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return passwordRegex.test(password);
+}
+
 
 async function handleSubmit(event) {
     event.preventDefault();
@@ -102,39 +120,95 @@ async function handleSubmit(event) {
     const password = document.getElementById('password').value;
     const name = document.getElementById('name').value;
     const country = document.getElementById('countryDropdown').value;
+    const countryField = document.getElementById('countryDropdown');
+    const nameField = document.getElementById('name');
+    const emailField = document.getElementById('email');
 
+    const countryError = document.querySelector('.country-error');
+    const nameError = document.querySelector('.name-error');
+    const emailError = document.querySelector('.email-error');
+    const passwordError = document.querySelector('.password-error');
+    const CfmpasswordError = document.querySelector('.confirmPassword-error');
 
-    //Set button to loading state
     const submitButton = document.querySelector('.submit-button');
-    submitButton.disabled = true;
-    submitButton.textContent = 'Loading...';
-
 
 
     try {
         if (currentMode === 'signup') {
-            const emailError = document.querySelector('.email-error');
-            const  passwordError = document.querySelector('.confirmPassword-error');
-        
-        
+
+            // Check if location is not empty
+            if (!country) {
+                countryError.textContent = 'Location is required. Please select your country.';
+                countryField.classList.add('form-error');
+                return;
+            }
+            else {
+                countryError.textContent = '';
+                countryField.classList.remove('form-error');
+            }
+            
+            // Check if username is not empty
+            if (!name) {
+                nameError.textContent = 'Name is required. Please enter your full name.';
+                nameField.classList.add('form-error');
+                return;
+            }
+            else {
+                nameError.textContent = '';
+                nameField.classList.remove('form-error');
+            }
+
+            // Check if email is not empty
+            if (!email) {
+                emailError.textContent = 'Email is required. Please enter a valid email.';
+                emailField.classList.add('form-error');
+                return;
+            }
+            else {
+                emailError.textContent = '';
+                emailField.classList.remove('form-error');
+            }
+            
+
             // Check if email is valid
             const isEmailValid = await checkEmail(email);
             if (!isEmailValid) {
-                emailError.textContent = 'Invalid email format';
-                submitButton.disabled = false;
-                submitButton.textContent = 'Sign Up';
+                emailError.textContent = 'Invalid email. Please enter a correct email.';
+                emailField.classList.add('form-error');
                 return;
+            }
+            else {
+                emailError.textContent = '';
+                emailField.classList.remove('form-error');
+            }
+
+            // Check if password is valid
+            const isPasswordValid = isValidPassword(password);
+            if (!isPasswordValid) {
+                passwordError.textContent = 'Password do not meet the requirements. Please choose a different one.';
+                passwordField.classList.add('form-error');
+                return;
+            }
+            else {
+                passwordError.textContent = '';
+                passwordField.classList.remove('form-error');
             }
         
             // Check if passwords match
             const checkPassword = await checkConfirmPassword(passwordField, cfpw);
             if (!checkPassword) {
-                passwordError.textContent = 'Passwords do not match';
-                submitButton.disabled = false;
-                submitButton.textContent = 'Sign Up';
+                CfmpasswordError.textContent = 'Passwords do not match. Please try again.';
+                cfPw.classList.add('form-error');
                 return;
             }
+            else {
+                CfmpasswordError.textContent = '';
+                cfPw.classList.remove('form-error');
+            }
 
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Loading...';
             // Check if user already exists
             const checkUser = await fetch(`${RESTDB_URL}?q={"email":"${email}"}`, {
                 headers: {
@@ -149,9 +223,6 @@ async function handleSubmit(event) {
                 submitButton.textContent = 'Sign In';
                 return;
             }
-
-
-
 
             // Create new user
             const response = await fetch(RESTDB_URL, {
@@ -170,9 +241,9 @@ async function handleSubmit(event) {
             });
 
             if (response.ok) {
-                showAlert('Account created successfully!', 'success');
+                showAlert('Account created successfully! Redirecting you back to the log in page...', 'success');
                 
-                setTimeout(() => window.location.href = '/', 1500);
+                setTimeout(() => window.location.href = '/', 4000);
                 submitButton.disabled = false;
                 submitButton.textContent = 'Sign In';
             } else {
@@ -210,6 +281,7 @@ async function handleSubmit(event) {
         submitButton.textContent = 'Sign In';
     }
 }
+
 
 const passwordInput = document.getElementById('password');
 const lengthRequirement = document.getElementById('lengthRequirement');
@@ -277,7 +349,6 @@ countries.forEach(country => {
 const passwordField = document.getElementById("password");
 const showPasswordCheckbox = document.getElementById("showPasswordCheckbox");
 const cfpw = document.getElementById("cfPw");
-const passwordError = document.getElementById("confirmPassword-error");
 
 // Add event listener to the checkbox to toggle password visibility
 showPasswordCheckbox.addEventListener("change", () => {
