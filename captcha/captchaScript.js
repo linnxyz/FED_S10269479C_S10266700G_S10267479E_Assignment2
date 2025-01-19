@@ -22,8 +22,9 @@ function captcha(predefinedWords){
             inputField.style.borderColor = "#35ce4a";
             inputField.disabled = true;
             setTimeout(() => {
-                loaderContainer.style.display = "flex";
-              }, 1000);
+                window.location.href = "../loggedIn-Main/logIndex.html"
+            }, 1000);
+
             
         } else {
             messageDiv.textContent = `Please include everything you see (${matchingWordsCount}/3).`;
@@ -84,6 +85,12 @@ function generate(){
     }
 }
 
+
 generate();
+setTimeout(() => {
+    loaderContainer.style.display = "none";
+  }, 1500);
+
+
 
 
