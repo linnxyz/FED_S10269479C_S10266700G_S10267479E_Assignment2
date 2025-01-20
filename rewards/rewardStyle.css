@@ -1,0 +1,46 @@
+body {
+    font-family: "Montserrat", sans-serif;
+
+}
+
+.main-container {
+    padding: 24px 16px;
+}
+
+h2.main-heading {
+    border-left: 4px solid #ff4460;
+    padding: 8px 32px;
+    margin-top: 0;
+    margin-bottom: 42px;
+
+}
+
+.main-container h3 {
+    font-weight: normal;
+
+}
+
+.scratch-container {
+    width: 300px;
+    height: 100px;
+    border-radius: 10px;
+    margin-bottom: 32px;
+    overflow: hidden;
+    position: relative;
+}
+
+.scratch-card {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: grabbing;
+}
+
+canvas {
+    position: absolute;
+    cursor: grabbing;
+}

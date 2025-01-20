@@ -1,0 +1,212 @@
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: white;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #dddddd;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.5rem 2rem;
+}
+
+.logo {
+    width: 130px;
+}
+
+.search-bar {
+    flex: 1;
+    margin: 0 2rem;
+    position: relative;
+}
+
+.search-bar svg {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6b7280;
+}
+
+.search-bar input {
+    width: 100%;
+    height: 45px;
+    padding: 0.75rem 0.75rem 0.75rem 2.5rem; /* Adjust padding to make space for the icon */
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+.profile {
+    display: flex;
+    gap: 1rem;
+    background-color: rgb(245, 245, 245);
+    padding: 7px 12px;
+    border-radius: 9999px;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.profile:hover {
+    background-color: rgb(238, 238, 238);
+}
+
+.pfp {
+    width: 30px;
+    height: 30px;
+    border-radius: 1000px;
+
+}.p-username {
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0;
+    margin-top: 2px;
+}
+
+.arrow {
+    margin-top: 3px;
+    width: 20px;
+    height: 20px;
+    transition: 0.25s;
+}
+
+.rotate {
+    transform: rotate(-180deg);
+}
+
+.profile-dropdown {
+    display: none;
+    position: fixed;
+    right: 20vw;
+    top: 90px;
+    background: white;
+
+    border-radius: 7px;
+    padding: 15px 15px;
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.17);
+    width: 250px;
+    z-index: 1000;
+}
+
+.tabs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.profile-tab {
+    display: flex;
+    gap: 1rem;
+    height: 50px;
+    align-items: center;
+    padding: 0px 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.profile-tab:hover {
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+.setting {
+    transition: 1.5s;
+}
+
+.sell-item {
+    color: rgb(224, 9, 9);
+    background-color: rgb(255, 240, 240);
+    border-radius: 7px;
+    border: none;
+}
+
+.sell-item:hover {
+    background-color: rgb(255, 230, 230);
+}
+
+.notification {
+    transition: 0.5s;
+}
+
+.notification:hover {
+    animation: wiggle 0.5s ease-in-out; /* Play wiggle animation on hover */
+}
+
+.notification:active {
+    transform: scale(0.7); /* Scale down when clicked */
+}
+
+/* Wiggle animation */
+@keyframes wiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-15deg);
+    }
+    50% {
+        transform: rotate(15deg);
+    }
+    75% {
+        transform: rotate(-10deg);
+    }
+}
+
+.notification-dropdown {
+    display: none;
+    position: fixed;
+    right: 5vw;
+    top: 90px;
+    background: white;
+
+    border-radius: 7px;
+    padding: 10px;
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.17);
+    width: 500px;
+    z-index: 1000;
+}
+
+.notification-header {
+    position: absolute;
+    top: 0px;
+    padding: 20px ;
+    width: 100%;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.no-notification {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    padding: 80px 0 85px 0;
+}
+
+.no-notification p {
+    text-align: center;
+    margin-top: 30px;
+    color: gray;
+}
