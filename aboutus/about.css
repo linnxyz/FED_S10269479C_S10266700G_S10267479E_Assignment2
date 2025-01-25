@@ -1,0 +1,288 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.6;
+  }
+  
+  .about-section {
+    padding: 2em;
+    background-color: #f5f9fc;
+  }
+  
+  .about-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap; 
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .about-text {
+    flex: 1;
+    margin-right: 2em;
+  }
+  
+  .about-text h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+  }
+  
+  .about-text p {
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .about-image {
+    flex: 1;
+    text-align: right;
+    max-width: 500px;;
+  }
+  
+  .about-image img {
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+
+
+
+
+  .mission-section {
+    padding: 2em;
+    background-color: #ffffff;
+  }
+  
+  .mission-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .mission-image {
+    flex: 1;
+    margin-right: 9em;
+  }
+  
+  .mission-text {
+    flex: 1;
+  }
+  
+  .mission-text h2 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+  }
+  
+  .mission-text p {
+    font-size: 1.1em;
+    color: #666;
+  }
+
+
+
+
+  
+.story-section {
+    padding: 2em;
+    background-color: #f9f9f9;
+  }
+  
+  .story-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .story-text {
+    flex: 1;
+    margin-right: 2em;
+  }
+  
+  .story-text h2 {
+    font-size: 2.5em;
+    margin-bottom: 1em;
+  }
+  
+  .story-text p {
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 1em;
+  }
+  
+  .story-image {
+    flex: 1;
+    text-align: right;
+  }
+  
+  .story-image {
+    flex: 1;
+    text-align: right;
+    padding-right: 1em; 
+  }
+  
+  .mokesell-numbers-section {
+    text-align: center;
+    padding: 2em;
+    background-color: #f9fbfd;
+  }
+  
+  .mokesell-numbers-section h2 {
+    font-size: 2em;
+    margin-bottom: 1.5em;
+    color: #333;
+  }
+  
+  .mokesell-numbers-container {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    flex-wrap: wrap;
+  }
+  
+  .mokesell-number {
+    background: #fff;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 280px;
+  }
+  
+  .mokesell-number img {
+    width: 60px;
+    height: auto;
+    margin-bottom: 1em;
+  }
+  
+  .mokesell-number h3 {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+    color: #444;
+  }
+  
+  .learn-more {
+    color: #0077c8;
+    text-decoration: none;
+    font-size: 0.9em;
+  }
+  
+  .learn-more:hover {
+    text-decoration: underline;
+  }
+
+
+
+
+.customer-reviews {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+}
+
+h2 {
+    font-size: 28px;
+    color: #2c3e50;
+}
+
+p {
+    color: #7f8c8d;
+    margin-bottom: 40px;
+}
+
+.faq-slider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow {
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: #2c3e50;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.arrow.left {
+    left: 20px;
+}
+
+.arrow.right {
+    right: 20px;
+}
+
+.faq-box {
+    width: 600px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+
+
+
+.border-line {
+    width: 100%;
+    height: 4px;
+    background-color: #27ae60;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: -1;
+    border-radius: 10px;
+}
+
+blockquote {
+    font-size: 18px;
+    color: #2c3e50;
+    margin: 15px 0;
+}
+
+.reviewer {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-top: 10px;
+}
+
+
+
+.faq-header {
+  text-align: center; 
+  margin-bottom: 2em; 
+}
+
+.faq-header h2 {
+  font-size: 2em; 
+  margin-bottom: 0.5em; 
+}
+
+.faq p {
+  font-size: 1.2em; 
+  color: #666; 
+}
+
+
+
+
+
+
+
+
+  
