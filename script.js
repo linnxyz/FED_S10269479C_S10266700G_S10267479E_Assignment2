@@ -12,7 +12,6 @@ const passwordRequirements = document.querySelector('.password-requirements');
 const submitButton = document.querySelector('.submit-button');
 const authContainer = document.querySelector('.auth-container');
 
-
 const alertContainer = document.createElement('div');
 alertContainer.className = 'alert-container';
 document.body.appendChild(alertContainer);
@@ -266,7 +265,7 @@ async function handleSubmit(event) {
                 localStorage.setItem('user', JSON.stringify(user[0]));
                 submitButton.disabled = true;
                 submitButton.textContent = 'Sign In';
-                window.location.href = "loggedIn-Main/logIndex.html";
+                window.location.href = "captcha/captchaIndex.html";
                 
             } else {
                 showAlert('Invalid email or password', 'error');

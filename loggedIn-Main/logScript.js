@@ -100,6 +100,7 @@ async function fetchGeneralProducts() {
         
         if (products.length < 12) {
             hasMore = false;
+
         }
 
         displayGeneralProducts(products);
@@ -153,26 +154,31 @@ window.addEventListener("click", (event) => {
 
 async function updateLikeCount(listingID, likeCount) {
     try {
-        const response = await fetch(`${RESTDB_URL}${listingID}`, {
+        // Make sure RESTDB_URL ends with a forward slash
+        const url = `${RESTDB_URL}${listingID}`;
+        const response = await fetch(url, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'x-apikey': RESTDB_API_KEY, // Pass the API key in headers
+                'x-apikey': RESTDB_API_KEY,
+                // Add this header for CORS preflight requests
+                'Accept': 'application/json'
             },
-            body: JSON.stringify({ likes: likeCount }), // Update only the 'likes' field
+            body: JSON.stringify({ likes: likeCount })
         });
-
+        
         if (!response.ok) {
             throw new Error(`Failed to update like count: ${response.statusText}`);
         }
-
+        
         const updatedProduct = await response.json();
         console.log('Like count updated successfully:', updatedProduct);
     } catch (error) {
         console.error('Error updating like count:', error);
+        // Re-throw the error so the calling code knows something went wrong
+        throw error;
     }
 }
-
 
 // Use event delegation to handle like button clicks
 document.addEventListener('DOMContentLoaded', () => {

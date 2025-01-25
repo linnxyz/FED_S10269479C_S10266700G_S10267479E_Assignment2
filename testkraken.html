@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+</head>
+<body>
+    <h1>Upload an Image</h1>
+    <input type="file" id="imageInput" accept="image/*">
+    <div id="output"></div>
+
+    <script>
+        const apiKey = "42cf87180507811f8d4da9acd5069de4"; // Replace with your Kraken.io API Key
+        const apiSecret = "81357d03d8c0c0720262c040feea6185370ad692"; // Replace with your Kraken.io API Secret
+
+        async function uploadToKraken(imageFile) {
+            const formData = new FormData();
+            formData.append("auth", JSON.stringify({
+                api_key: apiKey,
+                api_secret: apiSecret,
+            }));
+            formData.append("data", JSON.stringify({
+                wait: true,
+            }));
+            formData.append("file", imageFile);
+
+            try {
+                const response = await fetch("https://api.kraken.io/v1/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    console.log("Optimized image URL:", result.kraked_url);
+                    return result.kraked_url; // Optimized image URL
+                } else {
+                    console.error("Kraken API Error:", result.error);
+                    throw new Error(result.error); // Throw detailed error
+                }
+            } catch (error) {
+                console.error("Request failed:", error);
+                throw error;
+            }
+        }
+
+
+        const imageInput = document.querySelector("#imageInput");
+        const outputDiv = document.querySelector("#output");
+
+        imageInput.addEventListener("change", async (event) => {
+            const imageFile = event.target.files[0];
+            if (imageFile) {
+                try {
+                    outputDiv.textContent = "Uploading...";
+                    const optimizedImageUrl = await uploadToKraken(imageFile);
+                    outputDiv.innerHTML = `
+                        <p>Optimized Image:</p>
+                        <img src="${optimizedImageUrl}" alt="Optimized Image" style="max-width: 300px;">
+                        <p><a href="${optimizedImageUrl}" target="_blank">${optimizedImageUrl}</a></p>
+                    `;
+                } catch (error) {
+                    outputDiv.textContent = "Error uploading image. Please try again.";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
