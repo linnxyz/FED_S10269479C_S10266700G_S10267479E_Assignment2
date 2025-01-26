@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="contact.css">
+  <script src="contact.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="contact-info">
+      <h2>Contact us</h2>
+      <p>
+        At MokeSell, we're committed to providing exceptional customer support. Our dedicated team is here to address your queries and ensure you receive the best service experience possible. Reach out to us—we’re always ready to assist you!
+      </p>
+    </div>
+
+    <div class="contact-form">
+      <form>
+        <div class="form-group">
+          <div class="form-field">
+            <label for="firstName">First name</label>
+            <input type="text" id="firstName" placeholder="First name">
+          </div>
+          <div class="form-field">
+            <label for="lastName">Last name</label>
+            <input type="text" id="lastName" placeholder="Last name">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Email">
+          </div>
+          <div class="form-field">
+            <label for="phone">Phone number</label>
+            <input type="tel" id="phone" placeholder="Phone number">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="topic">Choose a topic</label>
+          <select id="topic">
+            <option>Select one...</option>
+            <option>General Inquiry</option>
+            <option>Technical Support</option>
+            <option>Scam and Phishing</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="message">How can we help you?</label>
+          <textarea id="message" placeholder="Type your message..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Get in touch</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
