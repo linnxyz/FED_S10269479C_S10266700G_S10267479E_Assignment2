@@ -18,6 +18,20 @@ document.body.appendChild(alertContainer);
 
 let activeTimeout;
 
+async function hashPassword(password) {
+    // Use SHA-256 for hashing
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+    // Convert buffer to hex string
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+    return hashHex;
+}
+
 function showAlert(message, type = 'success', duration = 5000) {
     // Clear any existing alerts
     alertContainer.innerHTML = '';
@@ -117,11 +131,14 @@ async function handleSubmit(event) {
     
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const hashedPassword = await hashPassword(password);
+
     const name = document.getElementById('name').value;
     const country = document.getElementById('countryDropdown').value;
     const countryField = document.getElementById('countryDropdown');
     const nameField = document.getElementById('name');
     const emailField = document.getElementById('email');
+
 
     const countryError = document.querySelector('.country-error');
     const nameError = document.querySelector('.name-error');
@@ -223,6 +240,9 @@ async function handleSubmit(event) {
                 return;
             }
 
+
+
+
             // Create new user
             const response = await fetch(RESTDB_URL, {
                 method: 'POST',
@@ -232,7 +252,7 @@ async function handleSubmit(event) {
                 },
                 body: JSON.stringify({
                     email,
-                    password, // Note: In a real application, password should be hashed
+                    hashedPassword, // Note: In a real application, password should be hashed
                     name,
                     country,
                     createdAt: new Date()
@@ -242,7 +262,7 @@ async function handleSubmit(event) {
             if (response.ok) {
                 showAlert('Account created successfully! Redirecting you back to the log in page...', 'success');
                 
-                setTimeout(() => window.location.href = '/', 4000);
+                setTimeout(() => window.location.href = '/', 3000);
                 submitButton.disabled = false;
                 submitButton.textContent = 'Sign In';
             } else {
@@ -253,7 +273,7 @@ async function handleSubmit(event) {
             }
         } else {
             // Sign in
-            const response = await fetch(`${RESTDB_URL}?q={"email":"${email}","password":"${password}"}`, {
+            const response = await fetch(`${RESTDB_URL}?q={"email":"${email}","hashedPassword":"${hashedPassword}"}`, {
                 headers: {
                     'x-apikey': RESTDB_API_KEY
                 }
@@ -316,7 +336,7 @@ const countries = [
     "Korea (North)", "Korea (South)", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia",
     "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali",
     "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia",
-    "Montenegro", "Morocco", "Mozambique", "Myanmar (formerly Burma)", "Namibia", "Nauru", "Nepal", "Netherlands",
+    "Montenegro", "Morocco", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nepal", "Netherlands",
     "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama",
     "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda",
     "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe",
