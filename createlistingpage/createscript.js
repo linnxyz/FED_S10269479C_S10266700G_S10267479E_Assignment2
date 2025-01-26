@@ -2,7 +2,7 @@ const RESTDB_LISTINGS_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listi
 const API_KEY = '677f31d996bc7400895f1141';
 
 async function handleListingSubmit(event) {
-    event.preventDefault(); // Prevent form submission from reloading the page
+    event.preventDefault(); 
 
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
@@ -39,9 +39,9 @@ async function handleListingSubmit(event) {
     }
 }
 async function handledeletereqSubmit(event) {
-    event.preventDefault(); // Prevent form submission from reloading the page
+    event.preventDefault(); 
 
-    const ListingID = document.getElementById('ListingID').value.trim(); // Get and trim the ID from the input field
+    const ListingID = document.getElementById('ListingID').value.trim(); 
 
     if (!ListingID) {
         alert("Please provide a valid Listing ID.");
@@ -49,7 +49,7 @@ async function handledeletereqSubmit(event) {
     }
 
     try {
-        // Construct the DELETE URL with query syntax
+        
         const deleteUrl = `${RESTDB_LISTINGS_URL}?q={"listingID":"${ListingID}"}`;
 
         const response = await fetch(deleteUrl, {
@@ -65,21 +65,21 @@ async function handledeletereqSubmit(event) {
         }
 
         alert("Listing deleted successfully.");
-        document.getElementById('listingdeleteForm').reset(); // Clear the form
+        document.getElementById('listingdeleteForm').reset(); 
     } catch (error) {
         console.error("Error:", error);
         alert("An error occurred while deleting the listing: " + error.message);
     }
 }
 async function handleModifySubmit(event) {
-    event.preventDefault(); // Prevent form submission from reloading the page
+    event.preventDefault(); 
 
-    const listingID = document.getElementById('ListingID').value.trim(); // Get the Listing ID
-    const title = document.getElementById('newTitle').value.trim(); // Get new title
-    const description = document.getElementById('newDescription').value.trim(); // Get new description
-    const price = document.getElementById('newPrice').value.trim(); // Get new price
-    const category = document.getElementById('newCategory').value.trim(); // Get new category
-    const condition = document.getElementById('newCondition').value.trim(); // Get new condition
+    const listingID = document.getElementById('ListingID').value.trim(); 
+    const title = document.getElementById('newTitle').value.trim(); 
+    const description = document.getElementById('newDescription').value.trim(); 
+    const price = document.getElementById('newPrice').value.trim(); 
+    const category = document.getElementById('newCategory').value.trim(); 
+    const condition = document.getElementById('newCondition').value.trim(); 
 
     if (!listingID) {
         alert("Please provide a valid Listing ID.");
@@ -87,7 +87,6 @@ async function handleModifySubmit(event) {
     }
 
     try {
-        // Step 1: Query to find the record by listingID
         const queryUrl = `${RESTDB_LISTINGS_URL}?q={"listingID":"${listingID}"}`;
         const response = await fetch(queryUrl, {
             method: 'GET',
@@ -96,20 +95,15 @@ async function handleModifySubmit(event) {
                 'x-apikey': API_KEY
             }
         });
-
         const data = await response.json();
         if (data.length === 0) {
             alert("No listing found with the provided Listing ID.");
             return;
         }
-
-        // Step 2: Use the unique `_id` from the queried record
         const recordId = data[0]._id;
-
-        // Step 3: Update the record using the `_id`
         const modifyUrl = `${RESTDB_LISTINGS_URL}/${recordId}`;
         const modifyResponse = await fetch(modifyUrl, {
-            method: 'PATCH', // Use PATCH to partially update the record
+            method: 'PATCH', 
             headers: {
                 'Content-Type': 'application/json',
                 'x-apikey': API_KEY
@@ -129,7 +123,7 @@ async function handleModifySubmit(event) {
 
         const result = await modifyResponse.json();
         alert("Listing modified successfully: " + JSON.stringify(result));
-        document.getElementById('listingForm').reset(); // Clear the form
+        document.getElementById('listingForm').reset(); 
     } catch (error) {
         console.error("Error:", error);
         alert("An error occurred while modifying the listing: " + error.message);
