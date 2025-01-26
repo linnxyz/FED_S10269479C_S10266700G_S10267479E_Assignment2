@@ -72,14 +72,14 @@ async function handledeletereqSubmit(event) {
     }
 }
 async function handleModifySubmit(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
-    const listingID = document.getElementById('ListingID').value.trim(); 
-    const title = document.getElementById('newTitle').value.trim(); 
-    const description = document.getElementById('newDescription').value.trim(); 
-    const price = document.getElementById('newPrice').value.trim(); 
-    const category = document.getElementById('newCategory').value.trim(); 
-    const condition = document.getElementById('newCondition').value.trim(); 
+    const listingID = document.getElementById('ListingID').value.trim();
+    const title = document.getElementById('newTitle').value.trim();
+    const description = document.getElementById('newDescription').value.trim();
+    const price = parseFloat(document.getElementById('newPrice').value.trim());
+    const category = document.getElementById('newCategory').value.trim();
+    const condition = document.getElementById('newCondition').value.trim();
 
     if (!listingID) {
         alert("Please provide a valid Listing ID.");
@@ -87,23 +87,30 @@ async function handleModifySubmit(event) {
     }
 
     try {
-        const queryUrl = `${RESTDB_LISTINGS_URL}?q={"listingID":"${listingID}"}`;
-        const response = await fetch(queryUrl, {
+        const queryUrl = `${RESTDB_LISTINGS_URL}?q=${encodeURIComponent(JSON.stringify({ listingID: parseInt(listingID) }))}`;
+        const queryResponse = await fetch(queryUrl, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'x-apikey': API_KEY
             }
         });
-        const data = await response.json();
-        if (data.length === 0) {
-            alert("No listing found with the provided Listing ID.");
+
+        if (!queryResponse.ok) {
+            throw new Error(`Failed to query listing: ${queryResponse.status} ${queryResponse.statusText}`);
+        }
+
+        const queryResult = await queryResponse.json();
+        if (queryResult.length === 0) {
+            alert("No listing found with the specified ID.");
             return;
         }
-        const recordId = data[0]._id;
+
+        const recordId = queryResult[0]._id;
+
         const modifyUrl = `${RESTDB_LISTINGS_URL}/${recordId}`;
         const modifyResponse = await fetch(modifyUrl, {
-            method: 'PATCH', 
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
                 'x-apikey': API_KEY
@@ -123,7 +130,8 @@ async function handleModifySubmit(event) {
 
         const result = await modifyResponse.json();
         alert("Listing modified successfully: " + JSON.stringify(result));
-        document.getElementById('listingForm').reset(); 
+
+        document.getElementById('listingForm').reset();
     } catch (error) {
         console.error("Error:", error);
         alert("An error occurred while modifying the listing: " + error.message);
