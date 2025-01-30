@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create New Listing</title>
+  <link rel="stylesheet" href="sellStyle.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="left-column">
+    <div class="rules-section">
+      <h3>Listing Rules & Guidelines</h3>
+      <ul class="rules-list">
+        <li class="rule-item">
+          <span class="rule-icon">•</span>
+          <span>All items must be in working condition and accurately described</span>
+        </li>
+        <li class="rule-item">
+          <span class="rule-icon">•</span>
+          <span>Include clear, well-lit photos from multiple angles</span>
+        </li>
+        <li class="rule-item">
+          <span class="rule-icon">•</span>
+          <span>Set reasonable prices based on item condition and market value</span>
+        </li>
+        <li class="rule-item">
+          <span class="rule-icon">•</span>
+          <span>Respond to buyer inquiries within 24 hours</span>
+        </li>
+      </ul>
+
+      <div class="selling-steps">
+        <h3>How Selling Works</h3>
+        <div class="step">
+          <div class="step-number">1</div>
+          <div>Create your listing with detailed information and clear photos</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div>Receive inquiries and offers from interested buyers</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div>Arrange safe meetup or shipping with the buyer</div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div>Complete the sale and receive payment securely</div>
+        </div>
+      </div>
+    </div>
+    <div class="image-upload-container">
+      <h2>Upload Images</h2>
+      <label for="imageUpload" class="image-upload-label">
+        <div class="upload-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#5EAC7A" class="bi bi-folder-plus" viewBox="0 0 16 16">
+            <path d="m.5 3 .04.87a2 2 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2m5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19q-.362.002-.683.12L1.5 2.98a1 1 0 0 1 1-.98z"/>
+            <path d="M13.5 9a.5.5 0 0 1 .5.5V11h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V12h-1.5a.5.5 0 0 1 0-1H13V9.5a.5.5 0 0 1 .5-.5"/>
+          </svg>
+        </div>
+        <div>Click or drag to upload images</div>
+        <div style="color: #718096; font-size: 0.875rem;">Maximum 5 images</div>
+      </label>
+      <input type="file" id="imageUpload" accept="image/*" multiple class="hidden">
+      <div class="image-grid" id="imageGrid"></div>
+    </div>
+  </div>
+
+  <div class="right-column">
+    <h2>Create New Listing</h2>
+    <form id="listingForm" onsubmit="handleListingSubmit(event)">
+      <div class="form-group">
+        <label for="title" class="form-label">Item Title</label>
+        <input type="text" id="title" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="form-label">Description (100 words max)</label>
+        <textarea id="description" class="form-input" rows="4" required></textarea>
+        <div id="wordCount" class="word-count">0/100 words</div>
+      </div>
+
+      <div class="form-group">
+        <label for="price" class="form-label">Price ($)</label>
+        <input type="number" id="price" class="form-input" step="0.01" min="0" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <div class="category-grid">
+          <div class="category-item" data-category="laptop">
+            <div class="category-icon">
+              <svg  width="50" height="50" viewBox="0 0 81 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M70.5 0H10.5C7.73858 0 5.5 2.23858 5.5 5V50C5.5 52.7614 7.73858 55 10.5 55H70.5C73.2614 55 75.5 52.7614 75.5 50V5C75.5 2.23858 73.2614 0 70.5 0Z" fill="#CDCED0"/>
+                <path d="M78 50H3C1.61929 50 0.5 51.1193 0.5 52.5C0.5 53.8807 1.61929 55 3 55H78C79.3807 55 80.5 53.8807 80.5 52.5C80.5 51.1193 79.3807 50 78 50Z" fill="#95989D"/>
+                <path d="M68 5H13C11.6193 5 10.5 6.11929 10.5 7.5V42.5C10.5 43.8807 11.6193 45 13 45H68C69.3807 45 70.5 43.8807 70.5 42.5V7.5C70.5 6.11929 69.3807 5 68 5Z" fill="#46484C"/>
+                <path d="M68 7.5H13V41.25H68V7.5Z" fill="#9494D1"/>
+                <path d="M55.5 23.75H25.5V27.5H55.5V23.75Z" fill="#D4D4ED"/>
+                <path d="M68 38.75H13V42.5H68V38.75Z" fill="#4141AF"/>
+                <path d="M45.5 17.5H35.5V20H45.5V17.5Z" fill="#D4D4ED"/>
+              </svg>
+            </div>
+            <div class="category-label">Laptop</div>
+          </div>
+          <div class="category-item" data-category="smartphone">
+            <div class="category-icon">
+              <svg width="40" height="45" viewBox="0 0 45 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M39.25 0H5.5C2.73858 0 0.5 2.23858 0.5 5V73.75C0.5 76.5114 2.73858 78.75 5.5 78.75H39.25C42.0114 78.75 44.25 76.5114 44.25 73.75V5C44.25 2.23858 42.0114 0 39.25 0Z" fill="#95989D"/>
+                <path d="M38 2.5H6.75C4.67893 2.5 3 4.17893 3 6.25V72.5C3 74.5711 4.67893 76.25 6.75 76.25H38C40.0711 76.25 41.75 74.5711 41.75 72.5V6.25C41.75 4.17893 40.0711 2.5 38 2.5Z" fill="#CDCED0"/>
+                <path d="M41.75 10H3V68.75H41.75V10Z" fill="#46484C"/>
+                <path d="M41.75 10H3V68.75H41.75V10Z" fill="#4141AF"/>
+                <path d="M41.75 10H3V57.5H41.75V10Z" fill="#9494D1"/>
+                <path d="M26.75 5H18C17.3096 5 16.75 5.55964 16.75 6.25C16.75 6.94036 17.3096 7.5 18 7.5H26.75C27.4404 7.5 28 6.94036 28 6.25C28 5.55964 27.4404 5 26.75 5Z" fill="#46484C"/>
+                <path d="M15.5 13.75H6.75V22.5H15.5V13.75Z" fill="#D4D4ED"/>
+                <path d="M28 13.75H19.25V22.5H28V13.75Z" fill="#D4D4ED"/>
+              </svg>
+
+            </div>
+            <div class="category-label">Smartphone</div>
+          </div>
+          <div class="category-item" data-category="smartwatch">
+            <div class="category-icon">
+              <svg width="45" height="45" viewBox="0 0 52 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 33.25H41.25V44.5C41.25 52.7843 34.5343 59.5 26.25 59.5H25C16.7157 59.5 10 52.7843 10 44.5V33.25Z" fill="#95989D"/>
+                <path d="M41.25 30.75V15.75C41.25 7.46573 34.5343 0.75 26.25 0.75H25C16.7157 0.75 10 7.46573 10 15.75V30.75H41.25Z" fill="#CDCED0"/>
+                <mask id="mask0_202_356" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="10" y="0" width="32" height="31">
+                  <path d="M41.25 30.75V15.75C41.25 7.46573 34.5343 0.75 26.25 0.75H25C16.7157 0.75 10 7.46573 10 15.75V30.75H41.25Z" fill="#C1C4D6"/>
+                </mask>
+                <g mask="url(#mask0_202_356)">
+                  <path d="M23.75 23.25V25.75H10V23.25H23.75ZM41.25 23.25V25.75H27.5V23.25H41.25ZM23.75 18.25V20.75H10V18.25H23.75ZM41.25 18.25V20.75H27.5V18.25H41.25ZM23.75 13.25V15.75H10V13.25H23.75ZM41.25 13.25V15.75H27.5V13.25H41.25ZM23.75 8.25V10.75H10V8.25H23.75ZM41.25 8.25V10.75H27.5V8.25H41.25Z" fill="#95989D"/>
+                </g>
+                <path d="M30 65.75H21.25V75.75H30V65.75Z" fill="#CDCED0"/>
+                <path d="M45 30.75H6.25V35.75H45V30.75Z" fill="#95989D"/>
+                <path d="M41.25 28.25H10V38.25H41.25V28.25Z" fill="#46484C"/>
+                <path d="M42.5 74.5H10C7.92893 74.5 6.25 76.1789 6.25 78.25C6.25 80.3211 7.92893 82 10 82H42.5C44.5711 82 46.25 80.3211 46.25 78.25C46.25 76.1789 44.5711 74.5 42.5 74.5Z" fill="#95989D"/>
+                <path d="M48.75 33.25V45.75C48.75 58.1764 38.6764 68.25 26.25 68.25H25C12.5736 68.25 2.5 58.1764 2.5 45.75V33.25H48.75ZM7.5 33.25V45.75C7.5 55.415 15.335 63.25 25 63.25H26.25C35.915 63.25 43.75 55.415 43.75 45.75V33.25H7.5Z" fill="#CDCED0"/>
+                <path d="M6.875 25.75C7.08594 25.75 7.29466 25.7595 7.50076 25.7781V39.4719C7.29466 39.4905 7.08594 39.5 6.875 39.5C3.07804 39.5 0 36.422 0 32.625C0 28.828 3.07804 25.75 6.875 25.75ZM44.375 25.75C48.172 25.75 51.25 28.828 51.25 32.625C51.25 36.422 48.172 39.5 44.375 39.5C44.1645 39.5 43.9562 39.4905 43.7505 39.472V25.778C43.9562 25.7595 44.1645 25.75 44.375 25.75Z" fill="#CDCED0"/>
+              </svg>
+            </div>
+            <div class="category-label">Microphone</div>
+          </div>
+          <div class="category-item" data-category="headphones">
+            <div class="category-icon">
+              <svg width="42" height="50" viewBox="0 0 84 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M42 0.5C22.67 0.5 7 16.1687 7 35.495V47.9937H12V35.495C12 18.9287 25.4312 5.5 42 5.5C58.5688 5.5 72 18.9287 72 35.495V47.9937H77V35.495C77 16.1687 61.33 0.5 42 0.5Z" fill="#CDCED0"/>
+                <path d="M83.25 54.875C83.25 48.3166 77.9334 43 71.375 43C64.8166 43 59.5 48.3166 59.5 54.875V58.625C59.5 65.1834 64.8166 70.5 71.375 70.5C77.9334 70.5 83.25 65.1834 83.25 58.625V54.875Z" fill="#9494D1"/>
+                <path d="M74.5 45.5C74.5 41.3579 71.1421 38 67 38C62.8579 38 59.5 41.3579 59.5 45.5V68C59.5 72.1421 62.8579 75.5 67 75.5C71.1421 75.5 74.5 72.1421 74.5 68V45.5Z" fill="#46484C"/>
+                <path d="M24.5 54.875C24.5 48.3166 19.1834 43 12.625 43C6.06662 43 0.75 48.3166 0.75 54.875V58.625C0.75 65.1834 6.06662 70.5 12.625 70.5C19.1834 70.5 24.5 65.1834 24.5 58.625V54.875Z" fill="#9494D1"/>
+                <path d="M24.5 45.5C24.5 41.3579 21.1421 38 17 38C12.8579 38 9.5 41.3579 9.5 45.5V68C9.5 72.1421 12.8579 75.5 17 75.5C21.1421 75.5 24.5 72.1421 24.5 68V45.5Z" fill="#46484C"/>
+              </svg>
+            </div>
+            <div class="category-label">Headphones</div>
+          </div>
+          <div class="category-item" data-category="gaming">
+            <div class="category-icon">
+              <svg width="40" height="70" viewBox="0 0 90 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M67.5 30.5H22.5C10.0736 30.5 0 40.5736 0 53C0 65.4264 10.0736 75.5 22.5 75.5H67.5C79.9264 75.5 90 65.4264 90 53C90 40.5736 79.9264 30.5 67.5 30.5Z" fill="#46484C"/>
+                <path d="M67.5 0.5H22.5C10.0736 0.5 0 10.5736 0 23C0 35.4264 10.0736 45.5 22.5 45.5H67.5C79.9264 45.5 90 35.4264 90 23C90 10.5736 79.9264 0.5 67.5 0.5Z" fill="#95989D"/>
+                <path d="M72.5 8H17.5V38H72.5V8Z" fill="#D4D4ED"/>
+                <path d="M20 55.5C21.3807 55.5 22.5 54.3807 22.5 53C22.5 51.6193 21.3807 50.5 20 50.5C18.6193 50.5 17.5 51.6193 17.5 53C17.5 54.3807 18.6193 55.5 20 55.5Z" fill="#CDCED0"/>
+                <path d="M25 60.5C26.3807 60.5 27.5 59.3807 27.5 58C27.5 56.6193 26.3807 55.5 25 55.5C23.6193 55.5 22.5 56.6193 22.5 58C22.5 59.3807 23.6193 60.5 25 60.5Z" fill="#CDCED0"/>
+                <path d="M20 65.5C21.3807 65.5 22.5 64.3807 22.5 63C22.5 61.6193 21.3807 60.5 20 60.5C18.6193 60.5 17.5 61.6193 17.5 63C17.5 64.3807 18.6193 65.5 20 65.5Z" fill="#CDCED0"/>
+                <path d="M15 60.5C16.3807 60.5 17.5 59.3807 17.5 58C17.5 56.6193 16.3807 55.5 15 55.5C13.6193 55.5 12.5 56.6193 12.5 58C12.5 59.3807 13.6193 60.5 15 60.5Z" fill="#CDCED0"/>
+                <path d="M37.5 65.5C40.2614 65.5 42.5 63.2614 42.5 60.5C42.5 57.7386 40.2614 55.5 37.5 55.5C34.7386 55.5 32.5 57.7386 32.5 60.5C32.5 63.2614 34.7386 65.5 37.5 65.5Z" fill="#95989D"/>
+                <path d="M52.5 65.5C55.2614 65.5 57.5 63.2614 57.5 60.5C57.5 57.7386 55.2614 55.5 52.5 55.5C49.7386 55.5 47.5 57.7386 47.5 60.5C47.5 63.2614 49.7386 65.5 52.5 65.5Z" fill="#95989D"/>
+                <path d="M37.5 13H31.25V19.25H37.5V13Z" fill="#9494D1"/>
+                <path d="M28.75 13H22.5V19.25H28.75V13Z" fill="#9494D1"/>
+                <path d="M37.5 21.75H31.25V28H37.5V21.75Z" fill="#9494D1"/>
+                <path d="M70 55.5C71.3807 55.5 72.5 54.3807 72.5 53C72.5 51.6193 71.3807 50.5 70 50.5C68.6193 50.5 67.5 51.6193 67.5 53C67.5 54.3807 68.6193 55.5 70 55.5Z" fill="#CDCED0"/>
+                <path d="M75 60.5C76.3807 60.5 77.5 59.3807 77.5 58C77.5 56.6193 76.3807 55.5 75 55.5C73.6193 55.5 72.5 56.6193 72.5 58C72.5 59.3807 73.6193 60.5 75 60.5Z" fill="#CDCED0"/>
+                <path d="M70 65.5C71.3807 65.5 72.5 64.3807 72.5 63C72.5 61.6193 71.3807 60.5 70 60.5C68.6193 60.5 67.5 61.6193 67.5 63C67.5 64.3807 68.6193 65.5 70 65.5Z" fill="#CDCED0"/>
+                <path d="M65 60.5C66.3807 60.5 67.5 59.3807 67.5 58C67.5 56.6193 66.3807 55.5 65 55.5C63.6193 55.5 62.5 56.6193 62.5 58C62.5 59.3807 63.6193 60.5 65 60.5Z" fill="#CDCED0"/>
+              </svg>
+            </div>
+            <div class="category-label">Gaming</div>
+          </div>
+          <div class="category-item" data-category="camera">
+            <div class="category-icon">
+              <svg width="42" height="50" viewBox="0 0 83 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 35.5C59.665 35.5 67.5 27.665 67.5 18C67.5 8.33502 59.665 0.5 50 0.5C40.335 0.5 32.5 8.33502 32.5 18C32.5 27.665 40.335 35.5 50 35.5Z" fill="#46484C"/>
+                <path d="M77.5 5.5H13.75C10.9886 5.5 8.75 7.73858 8.75 10.5V50.5C8.75 53.2614 10.9886 55.5 13.75 55.5H77.5C80.2614 55.5 82.5 53.2614 82.5 50.5V10.5C82.5 7.73858 80.2614 5.5 77.5 5.5Z" fill="#95989D"/>
+                <path d="M48.75 45.5C57.7246 45.5 65 38.2246 65 29.25C65 20.2754 57.7246 13 48.75 13C39.7754 13 32.5 20.2754 32.5 29.25C32.5 38.2246 39.7754 45.5 48.75 45.5Z" fill="#CDCED0"/>
+                <path d="M48.75 38C53.5825 38 57.5 34.0825 57.5 29.25C57.5 24.4175 53.5825 20.5 48.75 20.5C43.9175 20.5 40 24.4175 40 29.25C40 34.0825 43.9175 38 48.75 38Z" fill="#46484C"/>
+                <path d="M48.75 35.5C52.2018 35.5 55 32.7018 55 29.25C55 25.7982 52.2018 23 48.75 23C45.2982 23 42.5 25.7982 42.5 29.25C42.5 32.7018 45.2982 35.5 48.75 35.5Z" fill="#9494D1"/>
+                <path d="M48.75 33C50.8211 33 52.5 31.3211 52.5 29.25C52.5 27.1789 50.8211 25.5 48.75 25.5C46.6789 25.5 45 27.1789 45 29.25C45 31.3211 46.6789 33 48.75 33Z" fill="#D4D4ED"/>
+                <path d="M12.4988 0.5H4.99875C2.2375 0.5 0 2.73875 0 5.5V50.5C0 53.2613 2.2375 55.5 4.99875 55.5H12.4988C15.2613 55.5 17.5 53.2613 17.5 50.5V5.5C17.5 2.73875 15.2613 0.5 12.4988 0.5Z" fill="#95989D"/>
+                <path d="M12.5 0.5H5C2.23858 0.5 0 2.73858 0 5.5V50.5C0 53.2614 2.23858 55.5 5 55.5H12.5C15.2614 55.5 17.5 53.2614 17.5 50.5V5.5C17.5 2.73858 15.2614 0.5 12.5 0.5Z" fill="#CDCED0"/>
+                <path d="M8.75 8C10.8211 8 12.5 6.88071 12.5 5.5C12.5 4.11929 10.8211 3 8.75 3C6.67893 3 5 4.11929 5 5.5C5 6.88071 6.67893 8 8.75 8Z" fill="#4141AF"/>
+              </svg>
+            </div>
+            <div class="category-label">Camera</div>
+          </div>
+          <div class="category-item" data-category="accessories">
+            <div class="category-icon">
+              <svg width="45" height="43" viewBox="0 0 50 83" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M30 43H20V83H30V43Z" fill="#CDCED0"/>
+                <path d="M20 4.25C20 2.17893 18.3211 0.5 16.25 0.5C14.1789 0.5 12.5 2.17893 12.5 4.25V21.75C12.5 23.8211 14.1789 25.5 16.25 25.5C18.3211 25.5 20 23.8211 20 21.75V4.25Z" fill="#CDCED0"/>
+                <path d="M38.75 4.25C38.75 2.17893 37.0711 0.5 35 0.5C32.9289 0.5 31.25 2.17893 31.25 4.25V21.75C31.25 23.8211 32.9289 25.5 35 25.5C37.0711 25.5 38.75 23.8211 38.75 21.75V4.25Z" fill="#CDCED0"/>
+                <path d="M3.75 25.5H46.25V40.5C46.25 52.2361 36.7361 61.75 25 61.75C13.2639 61.75 3.75 52.2361 3.75 40.5V25.5Z" fill="#9494D1"/>
+                <path d="M45 20.5H5C2.23858 20.5 0 22.7386 0 25.5C0 28.2614 2.23858 30.5 5 30.5H45C47.7614 30.5 50 28.2614 50 25.5C50 22.7386 47.7614 20.5 45 20.5Z" fill="#4141AF"/>
+              </svg>
+            </div>
+            <div class="category-label">Accessories</div>
+          </div>
+          <div class="category-item" data-category="others">
+            <div class="category-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="#7f7fcf" class="bi bi-grid" viewBox="0 0 16 16">
+                <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z"/>
+              </svg>
+
+            </div>
+            <div class="category-label">Others</div>
+          </div>
+        </div>
+        <input type="hidden" id="category" name="category" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Condition</label>
+        <div class="condition-grid">
+          <div class="condition-item" data-condition="new">
+            <div class="condition-icon">⭐</div>
+            <div class="condition-label">New</div>
+            <div class="condition-description">Brand new, unused item in original packaging</div>
+          </div>
+          <div class="condition-item" data-condition="like-new">
+            <div class="condition-icon">❤️</div>
+            <div class="condition-label">Like New</div>
+            <div class="condition-description">Used once or twice, perfect condition</div>
+          </div>
+          <div class="condition-item" data-condition="good">
+            <div class="condition-icon">✅</div>
+            <div class="condition-label">Good</div>
+            <div class="condition-description">Minor wear, fully functional</div>
+          </div>
+          <div class="condition-item" data-condition="fair">
+            <div class="condition-icon">⚠️</div>
+            <div class="condition-label">Fair</div>
+            <div class="condition-description">Visible wear, works as intended</div>
+          </div>
+          <div class="condition-item" data-condition="poor">
+            <div class="condition-icon">⛔</div>
+            <div class="condition-label">Poor</div>
+            <div class="condition-description">Heavy wear, may have issues</div>
+          </div>
+        </div>
+        <input type="hidden" id="condition" name="condition" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" style="font-weight: bold">Deal Methods</label>
+        <div class="switch-container">
+          <label for="delivery">Delivery</label>
+          <label class="switch">
+            <input type="checkbox" id="delivery" value="delivery" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="switch-container">
+          <label for="meetup">Meet Up</label>
+          <label class="switch">
+            <input type="checkbox" id="meetup" value="meetup">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="form-group hidden" id="dealLocationGroup">
+        <label for="dealLocation" class="form-label">Deal Location</label>
+        <input id="dealLocation" type="text" class="form-input">
+      </div>
+      <button type="submit" class="submit-button" id="submitButton">Create Listing</button>
+    </form>
+  </div>
+</div>
+
+<script src="GOOGLE_API"></script>
+<script src="sellScript.js"></script>
+</body>
+</html>
