@@ -22,7 +22,7 @@ function captcha(predefinedWords){
             inputField.style.borderColor = "#35ce4a";
             inputField.disabled = true;
             setTimeout(() => {
-                window.location.href = "../loggedIn-Main/logIndex.html"
+                window.location.href = "../index.html"
             }, 1000);
 
             

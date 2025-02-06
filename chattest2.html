@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jane's Chat</title>
+    <script>
+        (function(t,a,l,k,j,s){
+            s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
+            ;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
+                        .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .header {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        #talkjs-container {
+            flex-grow: 1;
+            min-height: 500px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Jane's Chat</h1>
+</div>
+<div id="talkjs-container"></div>
+
+<script>
+    Talk.ready.then(function() {
+        var me = new Talk.User({
+            id: "2",
+            name: "Jane Smith",
+            email: "jane@example.com",
+            photoUrl: "https://via.placeholder.com/100?text=Jane",
+            welcomeMessage: "Hi there! I'm Jane."
+        });
+
+        window.talkSession = new Talk.Session({
+            appId: "tDJyZCKB",
+            me: me
+        });
+
+        var other = new Talk.User({
+            id: "1",
+            name: "John Doe",
+            email: "john@example.com",
+            photoUrl: "https://via.placeholder.com/100?text=John",
+            welcomeMessage: "Hey there! I'm John."
+        });
+
+        var conversation = talkSession.getOrCreateConversation(Talk.oneOnOneId(me, other));
+        conversation.setParticipant(me);
+        conversation.setParticipant(other);
+
+        var chatbox = talkSession.createChatbox(conversation);
+        chatbox.mount(document.getElementById("talkjs-container"));
+    });
+</script>
+</body>
+</html>
