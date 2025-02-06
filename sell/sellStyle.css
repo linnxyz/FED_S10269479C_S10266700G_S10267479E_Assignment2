@@ -8,12 +8,7 @@
 body {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
     color: #333;
-}
-
-.listing-banner {
-    width: 800px;
 }
 
 .container {
@@ -22,23 +17,23 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
-    padding: 2rem;
+    padding: 7rem 2rem 2rem;
 }
 
 .left-column {
+    padding: 2rem;
+}
+
+.right-column {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-.right-column {
-    padding: 2rem;
-}
-
 .rules-section {
     margin-top: 100px;
     padding: 2rem;
-    border: 1px solid #b0c7ff;
+    background: #f5f7ff;
     border-radius: 10px;
 }
 
@@ -97,7 +92,7 @@ body {
 h2 {
     font-size: 1.8rem;
     margin-bottom: 2rem;
-    color: #2d3748;
+    color: #2675f3;
 }
 
 .image-upload-container {

@@ -1,393 +1,264 @@
-// Replace with your RestDB API key
-const RESTDB_API_KEY = '677f31d996bc7400895f1141';
-const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/accounts';
-let currentMode = 'signin';
-const authSwitchLink = document.getElementById('authSwitchLink');
-const confirmPasswordField = document.getElementById('confirmPassword');
-const title = document.querySelector('.auth-title');
-const countryField = document.getElementById('countryField');
-const nameField = document.getElementById('nameField');
-const forgotPassword = document.querySelector('.fg-password');
-const passwordRequirements = document.querySelector('.password-requirements');
-const submitButton = document.querySelector('.submit-button');
-const authContainer = document.querySelector('.auth-container');
+// const RESTDB_API_KEY = '677f31d996bc7400895f1141';
+// const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings?';
+let page = 1;
+let loading = false;
+let hasMore = true;
 
-const alertContainer = document.createElement('div');
-alertContainer.className = 'alert-container';
-document.body.appendChild(alertContainer);
-
-let activeTimeout;
-
-async function hashPassword(password) {
-    // Use SHA-256 for hashing
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-
-    // Convert buffer to hex string
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-
-    return hashHex;
+function sanitizeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
 }
 
-function showAlert(message, type = 'success', duration = 5000) {
-    // Clear any existing alerts
-    alertContainer.innerHTML = '';
+function createProductCard(product) {
+    const sanitizedProduct = {
+        listingID: sanitizeHTML(product.listingID),
+        title: sanitizeHTML(product.title),
+        description: sanitizeHTML(product.description),
+        condition: sanitizeHTML(product.condition),
+        category: sanitizeHTML(product.category),
+        price: Number(product.price).toFixed(2),
+        likes: parseInt(product.likes) || 0
+    };
 
-    // Create alert element
-    const alert = document.createElement('div');
-    alert.className = `alert ${type}`;
-
-    // Add message
-    alert.innerHTML = `
-    ${message}
-    <button class="close-btn" onclick="closeAlert()">&times;</button>
+    return `
+        <div class="product-card">
+            <div id="listingID" style="display: none">${sanitizedProduct.listingID}</div>
+            <div class="product-image"></div>
+            <div class="product-info">
+                <div class="product-header">
+                    <h3>${sanitizedProduct.title}</h3>
+                    <div class="like-container">
+                        <div class="like-button">
+                            <svg class="heart-stroke" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                            </svg>
+                            <svg class="heart-filled" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                            </svg>
+                        </div>
+                        <span class="like-count">${sanitizedProduct.likes}</span>
+                    </div>
+                </div>
+                <p class="product-description">${sanitizedProduct.description}</p>
+                <div class="tags">
+                    <span class="condition-tag">${sanitizedProduct.condition}</span>
+                    <span class="category-tag">${sanitizedProduct.category}</span>
+                </div>
+                <div class="product-footer">
+                    <div class="price">$${sanitizedProduct.price}</div>
+                    <div class="more">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                        </svg>
+                        <!-- Dropdown Menu -->
+                        <div class="more-report" style="display: none;">
+                            <button class="report-post">
+                                <svg class="flag" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-flag" viewBox="0 0 16 16">
+                                    <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21 21 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21 21 0 0 0 14 7.655V1.222z"/>
+                                </svg>
+                                Report Post
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     `;
-
-    // Add alert to container
-    alertContainer.appendChild(alert);
-
-    // Show alert
-    setTimeout(() => {
-    alertContainer.style.top = '20px';
-    }, 100);
-
-    // Clear any existing timeout
-    if (activeTimeout) {
-    clearTimeout(activeTimeout);
-    }
-
-    // Auto-hide after duration
-    activeTimeout = setTimeout(() => {
-    closeAlert();
-    }, duration);
 }
 
-function closeAlert() {
-    alertContainer.style.top = '-100px';
-
-    // Clear timeout if exists
-    if (activeTimeout) {
-    clearTimeout(activeTimeout);
+async function fetchTrendingProducts() {
+    try {
+        const response = await fetch(`${RESTDB_URL}apikey=${RESTDB_API_KEY}`);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const products = await response.json();
+        const trendingProducts = products.sort((a, b) => b.likes - a.likes).slice(0, 5);
+        displayTrendingProducts(trendingProducts);
+    } catch (error) {
+        console.error('Error fetching trending products:', error);
+        document.getElementById('trendingProducts').innerHTML =
+            '<p>Error loading trending products. Please try again later.</p>';
     }
 }
 
+// Event listener for the "Next Page" button
+document.getElementById('nextPageButton').addEventListener('click', () => {
+    fetchGeneralProducts();
+});
 
-function switchAuthMode() {
-    const isSignIn = currentMode === 'signin';
+async function fetchGeneralProducts() {
+    if (loading || !hasMore) return;  // Prevent fetching if already loading or no more products
 
-    // Toggle mode
-    currentMode = isSignIn ? 'signup' : 'signin';
-    if (currentMode != 'signin') {
-        authContainer.style.maxWidth = '600px';
-        authContainer.style.marginTop = '20px';
-    }
-    else {
-        authContainer.style.maxWidth = '500px';
-        authContainer.style.marginTop = '130px';
-    }
-
-    // Update UI elements based on the current mode
-    nameField.style.display = isSignIn ? 'block' : 'none';
-    countryField.style.display = isSignIn ? 'block' : 'none';
-    forgotPassword.style.display = isSignIn ? 'none' : 'block';
-    passwordRequirements.style.display = isSignIn ? 'block' : 'none';
-    confirmPasswordField.style.display = isSignIn ? 'block' : 'none';
-    submitButton.textContent = isSignIn ? 'Sign Up' : 'Sign In';
-    title.textContent = isSignIn ? 'Create account' : 'Welcome back';
-
-    // Update the switch link text
-    authSwitchLink.innerHTML = isSignIn 
-        ? 'Already have an account? <a href="#" onclick="switchAuthMode()" style="color: var(--primary-color);">Sign in</a>' 
-        : 'Don\'t have an account? <a href="#" onclick="switchAuthMode()" style="color: var(--primary-color);">Create account</a>';
-}
-
-async function checkEmail(email) {
-    // Regular expression to validate the email format
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    // Check if email matches the regular expression
-    if (emailRegex.test(email)) {
-        return true; // Email is in a valid format
-    } else {
-        return false; // Email is not in a valid format
-    }
-}
-
-function isValidPassword(password) {
-    // Regular expression to check the conditions:
-    // - At least 8 characters long
-    // - Contains at least one uppercase letter
-    // - Contains at least one number
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-    return passwordRegex.test(password);
-}
-
-
-async function handleSubmit(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const hashedPassword = await hashPassword(password);
-
-    const name = document.getElementById('name').value;
-    const country = document.getElementById('countryDropdown').value;
-    const countryField = document.getElementById('countryDropdown');
-    const nameField = document.getElementById('name');
-    const emailField = document.getElementById('email');
-
-
-    const countryError = document.querySelector('.country-error');
-    const nameError = document.querySelector('.name-error');
-    const emailError = document.querySelector('.email-error');
-    const passwordError = document.querySelector('.password-error');
-    const CfmpasswordError = document.querySelector('.confirmPassword-error');
-
-    const submitButton = document.querySelector('.submit-button');
-
+    const loadingElement = document.querySelector('.loading');
+    loading = true;
 
     try {
-        if (currentMode === 'signup') {
+        const response = await fetch(`${RESTDB_URL}apikey=${RESTDB_API_KEY}&skip=${(page - 1) * 12}&max=12`);
+        if (!response.ok) throw new Error('Network response was not ok');
 
-            // Check if location is not empty
-            if (!country) {
-                countryError.textContent = 'Location is required. Please select your country.';
-                countryField.classList.add('form-error');
-                return;
-            }
-            else {
-                countryError.textContent = '';
-                countryField.classList.remove('form-error');
-            }
-            
-            // Check if username is not empty
-            if (!name) {
-                nameError.textContent = 'Name is required. Please enter your full name.';
-                nameField.classList.add('form-error');
-                return;
-            }
-            else {
-                nameError.textContent = '';
-                nameField.classList.remove('form-error');
-            }
+        const products = await response.json();
 
-            // Check if email is not empty
-            if (!email) {
-                emailError.textContent = 'Email is required. Please enter a valid email.';
-                emailField.classList.add('form-error');
-                return;
-            }
-            else {
-                emailError.textContent = '';
-                emailField.classList.remove('form-error');
-            }
-            
-
-            // Check if email is valid
-            const isEmailValid = await checkEmail(email);
-            if (!isEmailValid) {
-                emailError.textContent = 'Invalid email. Please enter a correct email.';
-                emailField.classList.add('form-error');
-                return;
-            }
-            else {
-                emailError.textContent = '';
-                emailField.classList.remove('form-error');
-            }
-
-            // Check if password is valid
-            const isPasswordValid = isValidPassword(password);
-            if (!isPasswordValid) {
-                passwordError.textContent = 'Password do not meet the requirements. Please choose a different one.';
-                passwordField.classList.add('form-error');
-                return;
-            }
-            else {
-                passwordError.textContent = '';
-                passwordField.classList.remove('form-error');
-            }
-        
-            // Check if passwords match
-            const checkPassword = await checkConfirmPassword(passwordField, cfpw);
-            if (!checkPassword) {
-                CfmpasswordError.textContent = 'Passwords do not match. Please try again.';
-                cfPw.classList.add('form-error');
-                return;
-            }
-            else {
-                CfmpasswordError.textContent = '';
-                cfPw.classList.remove('form-error');
-            }
-
-
-            submitButton.disabled = true;
-            submitButton.textContent = 'Loading...';
-            // Check if user already exists
-            const checkUser = await fetch(`${RESTDB_URL}?q={"email":"${email}"}`, {
-                headers: {
-                    'x-apikey': RESTDB_API_KEY
-                }
-            });
-            const existingUser = await checkUser.json();
-
-            if (existingUser.length > 0) {
-                showAlert('Email already registered', 'error');
-                submitButton.disabled = false;
-                submitButton.textContent = 'Sign In';
-                return;
-            }
-
-
-
-
-            // Create new user
-            const response = await fetch(RESTDB_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-apikey': RESTDB_API_KEY
-                },
-                body: JSON.stringify({
-                    email,
-                    hashedPassword, // Note: In a real application, password should be hashed
-                    name,
-                    country,
-                    createdAt: new Date()
-                })
-            });
-
-            if (response.ok) {
-                showAlert('Account created successfully! Redirecting you back to the log in page...', 'success');
-                
-                setTimeout(() => window.location.href = '/', 3000);
-                submitButton.disabled = false;
-                submitButton.textContent = 'Sign In';
-            } else {
-
-                showAlert('Error creating account', 'error');
-                submitButton.disabled = false;
-                submitButton.textContent = 'Sign In';
-            }
-        } else {
-            // Sign in
-            const response = await fetch(`${RESTDB_URL}?q={"email":"${email}","hashedPassword":"${hashedPassword}"}`, {
-                headers: {
-                    'x-apikey': RESTDB_API_KEY
-                }
-            });
-            const user = await response.json();
-
-            if (user.length > 0) {
-                // Store user session
-                localStorage.setItem('user', JSON.stringify(user[0]));
-                submitButton.disabled = true;
-                submitButton.textContent = 'Sign In';
-                window.location.href = "captcha/captchaIndex.html";
-                
-            } else {
-                showAlert('Invalid email or password', 'error');
-                submitButton.disabled = false;
-                submitButton.textContent = 'Sign In';
-            }
+        if (products.length < 12) {
+            hasMore = false;  // Stop fetching more pages if fewer than 12 products are returned
         }
+
+        displayGeneralProducts(products);  // Function to display the products
+        page++;  // Increment the page for the next fetch
     } catch (error) {
-        showAlert('An error occurred', 'error');
-        console.error('Error:', error);
-        submitButton.disabled = false;
-        submitButton.textContent = 'Sign In';
+        console.error('Error fetching products:', error);
+
+    } finally {
+        loading = false;
     }
 }
 
+function displayTrendingProducts(products) {
+    const container = document.getElementById('trendingProducts');
+    container.innerHTML = products.map(product => createProductCard(product)).join('');
+}
 
-const passwordInput = document.getElementById('password');
-const lengthRequirement = document.getElementById('lengthRequirement');
-const uppercaseRequirement = document.getElementById('uppercaseRequirement');
-const numberRequirement = document.getElementById('numberRequirement');
+function displayGeneralProducts(products) {
+    const container = document.getElementById('productsGrid');
+    const productCards = products.map(product => createProductCard(product)).join('');
+    container.insertAdjacentHTML('beforeend', productCards);
+}
 
-passwordInput.addEventListener('input', () => {
-    const password = passwordInput.value;
-
-    // Check requirements
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const isValidLength = password.length >= 8;
-
-    // Update the UI for password requirements
-    lengthRequirement.classList.toggle('valid', isValidLength);
-    uppercaseRequirement.classList.toggle('valid', hasUppercase);
-    numberRequirement.classList.toggle('valid', hasNumber);
-});
+// Initial load
+fetchTrendingProducts();
+fetchGeneralProducts();
 
 
-const countries = [
-    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia",
-    "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
-    "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria",
-    "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic",
-    "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Congo (Democratic Republic)",
-    "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)", "Denmark", "Djibouti", "Dominica",
-    "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini",
-    "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada",
-    "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia",
-    "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati",
-    "Korea (North)", "Korea (South)", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia",
-    "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali",
-    "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia",
-    "Montenegro", "Morocco", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nepal", "Netherlands",
-    "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama",
-    "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda",
-    "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe",
-    "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands",
-    "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
-    "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
-    "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
-    "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-];
 
+const skeletonBanner = document.querySelector('.banner-skeleton');
+const banner = document.querySelector('.carousel');
 
-const dropdown = document.getElementById('countryDropdown');
+setTimeout(() => {
+    skeletonBanner.classList.add('hidden');
+    banner.classList.remove('hidden');
+}, 2000);
 
+async function updateLikeCount(listingID, likeCount) {
+    try {
+        // Make sure RESTDB_URL ends with a forward slash
+        const url = `${RESTDB_URL}${listingID}`;
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-apikey': RESTDB_API_KEY,
+                // Add this header for CORS preflight requests
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ likes: likeCount })
+        });
 
-countries.forEach(country => {
+        if (!response.ok) {
+            throw new Error(`Failed to update like count: ${response.statusText}`);
+        }
 
-    const option = document.createElement('option');
-
-    option.value = country; // Set the value to the country name
-
-    option.textContent = country; // Set the displayed text to the country name
-
-    dropdown.appendChild(option); // Append the option to the dropdown
-
-});
-
-
-// Get the elements
-const passwordField = document.getElementById("password");
-const showPasswordCheckbox = document.getElementById("showPasswordCheckbox");
-const cfpw = document.getElementById("cfPw");
-
-// Add event listener to the checkbox to toggle password visibility
-showPasswordCheckbox.addEventListener("change", () => {
-    // If checkbox is checked, show the password
-    if (showPasswordCheckbox.checked) {
-        passwordField.type = "text";
-        cfpw.type = "text";
-    } else {
-        // If checkbox is unchecked, hide the password
-        passwordField.type = "password";
-        cfpw.type = "password";
-    }
-});
-
-async function checkConfirmPassword(passwordField, cfpw){
-    if(passwordField.value !== cfpw.value){ 
-        return false;
-    } else {
-        return true;
+        const updatedProduct = await response.json();
+        console.log('Like count updated successfully:', updatedProduct);
+    } catch (error) {
+        console.error('Error updating like count:', error);
+        // Re-throw the error so the calling code knows something went wrong
+        throw error;
     }
 }
 
-  
+// Use event delegation to handle like button clicks
+document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('click', async (event) => {
+        const likeButton = event.target.closest('.like-button');
+        if (likeButton) {
+            const container = likeButton.closest('.like-container');
+            const heartStroke = container.querySelector('.heart-stroke');
+            const heartFilled = container.querySelector('.heart-filled');
+            const likeCountElement = container.querySelector('.like-count');
+            const listingID = document.getElementById('listingID').textContent;
+
+            // Initialize like count from the span's inner text
+            let likeCount = parseInt(likeCountElement.textContent, 10) || 0;
+
+            // Check the current state using the display property
+            const isLiked = heartStroke.style.display === 'none';
+
+            if (isLiked) {
+                // Unlike: Show stroked heart, hide filled heart, decrement count
+                heartStroke.style.display = 'block';
+                heartFilled.style.display = 'none';
+                likeCount--;
+            } else {
+                // Like: Hide stroked heart, show filled heart, increment count
+                heartStroke.style.display = 'none';
+                heartFilled.style.display = 'block';
+                likeCount++;
+            }
+
+            // Update the like count display
+            likeCountElement.textContent = likeCount;
+
+            // Update the like count on the server
+            await updateLikeCount(listingID, likeCount);
+        }
+    });
+});
+
+// Select all product cards
+const productCards = document.querySelectorAll('.product-card');
+
+// Add click event listener to each product card
+productCards.forEach(card => {
+    card.addEventListener('click', (event) => {
+        // Check if the click occurred on or within the "like-button"
+        if (event.target.closest('.like-button, .condition-tag, .category-tag, .more')) {
+            // Stop the event from propagating to the product card
+            event.stopPropagation();
+            return; // Exit to avoid redirection
+        }
+
+        // Redirect to another page
+        window.location.href = 'product.html';
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('click', function(e) {
+        const moreButton = e.target.closest('.more svg');
+        const moreReport = e.target.closest('.product-card')?.querySelector('.more-report');
+
+        if (moreButton) {
+            e.stopPropagation(); // Prevent this click from triggering the document click
+            if (moreReport) {
+                moreReport.style.display = moreReport.style.display === 'none' ? 'block' : 'none';
+            }
+        } else if (!e.target.closest('.more')) {
+            document.querySelectorAll('.more-report').forEach(report => {
+                report.style.display = 'none';
+            });
+        }
+    });
+});
+
+// Welcome Pop Up
+function initWelcomePopup() {
+    if (localStorage.getItem('firstTime')) {
+        const popup = document.querySelector('.welcome-popup');
+
+        document.body.appendChild(popup);
+        setTimeout(() => popup.classList.add('show'), 100);
+
+        popup.querySelector('.close').onclick = () => {
+            popup.classList.remove('show');
+            setTimeout(() => popup.remove(), 300);
+            localStorage.removeItem('firstTime');
+        };
+        popup.querySelector('.buttons').onclick = () => {
+            popup.classList.remove('show');
+            setTimeout(() => popup.remove(), 300);
+            localStorage.removeItem('firstTime');
+        };
+    }
+}
+
+// Call this when the page loads
+window.addEventListener('load', initWelcomePopup);

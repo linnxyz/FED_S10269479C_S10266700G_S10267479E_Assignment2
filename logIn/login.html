@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - MokeSell</title>
+
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <img class="logo" src="../assets/logo_white.svg" alt="MokeSell Logo">
+
+    <div class="main-container">
+        <div class="left-side">
+
+            <div class="left-side-content">
+                <h2>YOUR MARKETPLACE FOR PRELOVED TECH</h2>
+                <p>Experience the best of our services. Sign in to get started on your journey with us.</p>
+            </div>
+        </div>
+        <div class="auth-container" id="authContainer">
+            <h1 class="auth-title">Hey, welcome back!</h1>
+            <div id="message" class="message"></div>
+            <form id="authForm" onsubmit="handleSubmit(event)">
+                <div id="countryField" class="form-group" style="display: none;">
+                    <label for="countryDropdown" class="form-label">Select your location <span class="asterisk">*</span></label>
+                    <select id="countryDropdown">
+                        <option value="" disabled selected>Select a country</option>
+                    </select>
+                    <p class="country-error inlineError"></p>
+                </div>
+
+                <div id="nameField" class="form-group" style="display: none;">
+                    <label for="name" class="form-label">Full Name <span class="asterisk">*</span></label>
+                    <input type="text" id="name" class="form-input">
+                    <p class="name-error inlineError"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email <span class="asterisk">*</span></label>
+                    <input type="text" id="email" class="form-input">
+                    <p class="email-error inlineError"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password <span class="asterisk">*</span></label>
+                    <input type="password" id="password" class="form-input">
+                    <p class="password-error inlineError"></p>
+                    <a href="#" class="fg-password">Forgot password?</a>
+                    <div id="passwordRequirements" class="password-requirements">
+                        <ul>
+                            <li id="lengthRequirement" class="requirement">Minimum length of 8 characters</li>
+                            <li id="uppercaseRequirement" class="requirement">At least 1 uppercase letter</li>
+                            <li id="numberRequirement" class="requirement">At least 1 number</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="confirmPassword" class="form-group" style="display: none;">
+                    <label for="confirmPassword" class="form-label">Confirm password <span class="asterisk">*</span></label>
+                    <input id="cfPw" type="Password" class="form-input">
+
+                    <p class="confirmPassword-error inlineError"></p>
+
+                    <div class="showPasswordContainer">
+                        <input type="checkbox" id="showPasswordCheckbox">
+                        <label for="showPasswordCheckbox">Show Password</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button">Sign In</button>
+            </form>
+            <div id="authSwitchLink">
+
+                Don't have an account? <a href="#" onclick="switchAuthMode()" style="color: var(--primary-color); ">Create one</a>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

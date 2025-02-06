@@ -3,74 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - MokeSell</title>
+    <title>Shop Page</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="nav/navbar.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="background-pattern"></div>
-    <img class="logo" src="images/ms-logo-rbg.png" alt="MokeSell Logo">
-    
-    <div class="auth-container">
-        <h1 class="auth-title">Welcome back</h1>
-        <div id="message" class="message"></div>
-        <form id="authForm" onsubmit="handleSubmit(event)">
+    <nav id="navbar"></nav>
 
-            <div id="countryField" class="form-group" style="display: none;">
-                <label for="countryDropdown" class="form-label">Select your location <span class="asterisk">*</span></label>
-                <select id="countryDropdown">
-                    <option value="" disabled selected>Select a country</option>
-                </select>
-                <p class="country-error inlineError"></p>
+    <div class="container" id="container">
+        <!-- Skeleton Loader for Banner -->
+        <div class="banner-skeleton">
+            <div class="skeleton skeleton-banner"></div>
+        </div>
+        <!-- Carousel -->
+        <div id="carouselExampleCaptions" class="carousel slide hidden" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
-
-            <div id="nameField" class="form-group" style="display: none;">
-                <label for="name" class="form-label">Full Name <span class="asterisk">*</span></label>
-                <input type="text" id="name" class="form-input">
-                <p class="name-error inlineError"></p>
+            <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <img src="images/new-user-banner.png" class="d-block w-100" alt="First slide">
             </div>
-
-            <div class="form-group">
-                <label for="email" class="form-label">Email <span class="asterisk">*</span></label>
-                <input type="text" id="email" class="form-input">
-                <p class="email-error inlineError"></p>
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <img src="https://random.imagecdn.app/500/150" class="d-block w-100" alt="Second slide">
             </div>
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <img src="https://random.imagecdn.app/500/150" class="d-block w-100" alt="Third slide">
+            </div>
+            </div>
+            <!-- Previous and Next Buttons -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+            </button>
+        </div>
 
-            <div class="form-group">
-                <label for="password" class="form-label">Password <span class="asterisk">*</span></label>
-                <input type="password" id="password" class="form-input">
-                <p class="password-error inlineError"></p>
-                <a href="#" class="fg-password">Forgot password?</a>
-                <div id="passwordRequirements" class="password-requirements">
-                    <ul>
-                        <li id="lengthRequirement" class="requirement">Minimum length of 8 characters</li>
-                        <li id="uppercaseRequirement" class="requirement">At least 1 uppercase letter</li>
-                        <li id="numberRequirement" class="requirement">At least 1 number</li>
-                    </ul>
+
+        <section class="trending-section">
+            <h2 class="section-title">Trending Products</h2>
+            <div class="trending-products" id="trendingProducts">
+
+                <!-- Skeleton Loader -->
+                <div class="product-card skeleton-card loading hidden">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                    <div class="skeleton-tags">
+                        <div class="skeleton skeleton-tag"></div>
+                        <div class="skeleton skeleton-tag"></div>
+                    </div>
+                    <div class="skeleton-footer">
+                        <div class="skeleton skeleton-price"></div>
+                        <div class="skeleton skeleton-more"></div>
+                    </div>
+                </div>
+                <!-- Skeleton Loader -->
+                <div class="product-card skeleton-card loading hidden">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                    <div class="skeleton-tags">
+                        <div class="skeleton skeleton-tag"></div>
+                        <div class="skeleton skeleton-tag"></div>
+                    </div>
+                    <div class="skeleton-footer">
+                        <div class="skeleton skeleton-price"></div>
+                        <div class="skeleton skeleton-more"></div>
+                    </div>
+                </div>
+                <!-- Skeleton Loader -->
+                <div class="product-card skeleton-card loading hidden">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                    <div class="skeleton-tags">
+                        <div class="skeleton skeleton-tag"></div>
+                        <div class="skeleton skeleton-tag"></div>
+                    </div>
+                    <div class="skeleton-footer">
+                        <div class="skeleton skeleton-price"></div>
+                        <div class="skeleton skeleton-more"></div>
+                    </div>
+                </div>
+                <!-- Skeleton Loader -->
+                <div class="product-card skeleton-card loading hidden">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                    <div class="skeleton-tags">
+                        <div class="skeleton skeleton-tag"></div>
+                        <div class="skeleton skeleton-tag"></div>
+                    </div>
+                    <div class="skeleton-footer">
+                        <div class="skeleton skeleton-price"></div>
+                        <div class="skeleton skeleton-more"></div>
+                    </div>
+                </div>
+                <!-- Skeleton Loader -->
+                <div class="product-card skeleton-card loading hidden">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                    <div class="skeleton-tags">
+                        <div class="skeleton skeleton-tag"></div>
+                        <div class="skeleton skeleton-tag"></div>
+                    </div>
+                    <div class="skeleton-footer">
+                        <div class="skeleton skeleton-price"></div>
+                        <div class="skeleton skeleton-more"></div>
+                    </div>
                 </div>
             </div>
-            
-            <div id="confirmPassword" class="form-group" style="display: none;">
-                <label for="confirmPassword" class="form-label">Confirm password <span class="asterisk">*</span></label>
-                <input id="cfPw" type="Password" class="form-input">
 
-                <p class="confirmPassword-error inlineError"></p>
+        </section>
 
-                <div class="showPasswordContainer">
-                    <input type="checkbox" id="showPasswordCheckbox">
-                    <label for="showPasswordCheckbox">Show Password</label>
-                </div>
+        <section class="general-section">
+            <h2 class="section-title">All Products</h2>
+            <div class="products-grid" id="productsGrid">
             </div>
-
-            <button type="submit" class="submit-button">Sign In</button>
-        </form>
-        <div id="authSwitchLink">
-
-            Don't have an account? <a href="#" onclick="switchAuthMode()" style="color: var(--primary-color); ">Create account</a>
-
+        </section>
+        
+    </div>
+    <div class="more-button">
+        <button id="nextPageButton">Next Page</button>
+    </div>
+    <div class="welcome-popup">
+        <span class="close">✕</span>
+        <h3>Welcome to MokeSell! 🎉</h3>
+        <p>Thank you for signing up! To start exploring amazing deals, check out how we work or view your profile to personalize your experience!</p>
+        <div class="buttons">
+            <button class="primary" onclick="window.location.href='/how-we-work'">How It Works</button>
+            <button class="secondary" onclick="window.location.href='/support'">View Profile</button>
         </div>
     </div>
+    
 
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="nav/navbar.js"></script>
 </body>
 </html>

@@ -129,21 +129,42 @@ function setupSelectors(items, input) {
     });
 }
 
-async function handleListingSubmit(event) {
-    event.preventDefault();
+// Flag to check if the form is already being processed
+let isSubmitting = false;
 
-    // Validate form
+async function handleListingSubmit(event) {
+    event.preventDefault(); // Prevents the default form submission behavior
+
+    // Prevent submitting again if already submitting
+    if (isSubmitting) return;
+
+    // Mark the form as submitting
+    isSubmitting = true;
+
+    // Disable the submit button to prevent multiple submissions
+    elements.submitButton.disabled = true;
+
+    const meetupCheckbox = document.getElementById("meetup");
+    const dealLocationInput = document.getElementById("dealLocation");
+
+    // Only include dealLocation if meetup is selected
+    const dealLocation = meetupCheckbox.checked ? dealLocationInput.value : null;
+
     const formData = {
         title: elements.title.value,
         description: elements.description.value,
         price: elements.price.value,
         category: elements.categoryInput.value,
-        condition: elements.conditionInput.value
+        condition: elements.conditionInput.value,
+        dealLocation: dealLocation // Only include if necessary
     };
 
     const validationErrors = validateForm(formData);
     if (validationErrors.length > 0) {
         alert(validationErrors.join('\n'));
+        // Re-enable the submit button if validation fails
+        elements.submitButton.disabled = false;
+        isSubmitting = false; // Mark as not submitting anymore
         return;
     }
 
@@ -172,8 +193,13 @@ async function handleListingSubmit(event) {
     } catch (error) {
         console.error("Error:", error);
         alert("An error occurred: " + error.message);
+    } finally {
+        // Re-enable the submit button after the request is complete
+        elements.submitButton.disabled = false;
+        isSubmitting = false; // Mark as not submitting anymore
     }
 }
+
 
 function validateForm(formData) {
     const errors = [];

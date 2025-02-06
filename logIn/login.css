@@ -1,0 +1,260 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+    --primary-color: #18181b;
+    --text-color: #27272a;
+    --border-color: #e4e4e7;
+    --error-color: #ef4444;
+    --success-color: #22c55e;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    position: absolute;
+    top: 2.5rem;
+    left: 2.5rem;
+    z-index: 10;
+}
+
+/* New styles for two-column layout */
+.main-container {
+    display: flex;
+    min-height: 100vh;
+    align-items: stretch;
+}
+
+.left-side {
+    flex: 4;  /* Changed from 1 to 4 */
+    background: url(../assets/grid.svg);
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.left-side-content {
+    max-width: 500px;
+}
+
+.left-side-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.left-side-content p {
+    font-size: 1.1rem;
+    color: white;
+    line-height: 1.6;
+}
+
+/* Modified auth-container styles */
+.auth-container {
+    flex: 3.5;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 4rem 8rem;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-title {
+    color: #4A3AFF;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.5px;
+}
+
+/* Add responsive design at the end */
+@media (max-width: 1100px) {  /* Changed from 768px to 1024px for better responsiveness */
+    .main-container {
+        flex-direction: column;
+    }
+
+    .left-side {
+        display: none;
+    }
+
+    .auth-container {
+        max-width: 100%;
+        padding: 0 10rem;
+        margin: 0;
+    }
+
+    .logo {
+        content: url("../assets/logo.svg");
+        position: static;
+        margin: 2rem auto;
+        display: block;
+    }
+}
+
+
+.form-group {
+    margin-bottom: 1.1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(24, 24, 27, 0.1);
+}
+
+.form-error {
+    border: 1px solid var(--error-color);
+}
+
+.fg-password {
+    color: rgb(157, 157, 157);
+    text-decoration: none;
+}
+
+.password-requirements {
+    margin-top: 10px;
+}
+
+.requirement {
+    color: gray; /* Default color for unmet requirements */
+}
+
+.requirement.valid {
+    color: rgb(90, 196, 90); /* Color for met requirements */
+}
+
+.password-requirements {
+    display: none;
+    font-size: 12px;
+    padding-left: 12px;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.submit-button:hover {
+    transform: translateY(-1px);
+}
+
+#authSwitchLink {
+    text-align: center;
+    margin-top: 20px;
+    color: gray;
+}
+
+#countryDropdown {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    background-color: white;
+    transition: all 0.2s;
+}
+
+#countryDropdown:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(24, 24, 27, 0.1);
+}
+
+.showPasswordContainer {
+    padding-top: 10px;
+    font-size: 15px;
+}
+
+.inlineError {
+    color: var(--error-color);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.alert-container {
+    position: fixed;
+    top: -100px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: top 0.5s ease-in-out;
+    padding: 0 20px;
+}
+
+.alert {
+    background-color: #74d877;
+    color: white;
+    padding: 15px 40px 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.alert.error {
+    background-color: #ff675d;
+}
+
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.asterisk {
+    color: var(--error-color);
+}
+
+
