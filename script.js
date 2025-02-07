@@ -1,5 +1,5 @@
-// const RESTDB_API_KEY = '677f31d996bc7400895f1141';
-// const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings?';
+const RESTDB_API_KEY = '677f31d996bc7400895f1141';
+const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings?';
 let page = 1;
 let loading = false;
 let hasMore = true;
@@ -14,18 +14,27 @@ function createProductCard(product) {
     const sanitizedProduct = {
         listingID: sanitizeHTML(product.listingID),
         title: sanitizeHTML(product.title),
-        description: sanitizeHTML(product.description),
+        description: truncateText(sanitizeHTML(product.description), 15),
         condition: sanitizeHTML(product.condition),
         category: sanitizeHTML(product.category),
         price: Number(product.price).toFixed(2),
-        likes: parseInt(product.likes) || 0
+        likes: parseInt(product.likes) || 0,
+        dealLocation: sanitizeHTML(product.dealLocation)
     };
 
     return `
-        <div class="product-card">
-            <div id="listingID" style="display: none">${sanitizedProduct.listingID}</div>
+        <div class="product-card product" 
+            data-listing-id="${sanitizedProduct.listingID}"
+            data-title="${sanitizedProduct.title}"
+            data-description="${product.description}"
+            data-condition="${sanitizedProduct.condition}"
+            data-category="${sanitizedProduct.category}"
+            data-price="${sanitizedProduct.price}"
+            data-likes="${sanitizedProduct.likes}"
+            data-deal-location="${sanitizedProduct.dealLocation}">
             <div class="product-image"></div>
             <div class="product-info">
+                <div id="listingID"></div>
                 <div class="product-header">
                     <h3>${sanitizedProduct.title}</h3>
                     <div class="like-container">
@@ -65,6 +74,11 @@ function createProductCard(product) {
             </div>
         </div>
     `;
+}
+
+// Function to truncate text to a character limit
+function truncateText(text, charLimit) {
+    return text.length > charLimit ? text.substring(0, charLimit) + "..." : text;
 }
 
 async function fetchTrendingProducts() {
@@ -127,8 +141,6 @@ function displayGeneralProducts(products) {
 fetchTrendingProducts();
 fetchGeneralProducts();
 
-
-
 const skeletonBanner = document.querySelector('.banner-skeleton');
 const banner = document.querySelector('.carousel');
 
@@ -174,7 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const heartStroke = container.querySelector('.heart-stroke');
             const heartFilled = container.querySelector('.heart-filled');
             const likeCountElement = container.querySelector('.like-count');
-            const listingID = document.getElementById('listingID').textContent;
+
+            // Find the closest product card and get the listing ID
+            const listingIDElement = container.closest('.product-card').querySelector('#listingID');
+            if (!listingIDElement) {
+                console.error('Error: Listing ID not found');
+                return;
+            }
+            const listingID = listingIDElement.textContent;
 
             // Initialize like count from the span's inner text
             let likeCount = parseInt(likeCountElement.textContent, 10) || 0;
@@ -198,10 +217,11 @@ document.addEventListener('DOMContentLoaded', () => {
             likeCountElement.textContent = likeCount;
 
             // Update the like count on the server
-            await updateLikeCount(listingID, likeCount);
+            // await updateLikeCount(listingID, likeCount);
         }
     });
 });
+
 
 // Select all product cards
 const productCards = document.querySelectorAll('.product-card');
@@ -262,3 +282,31 @@ function initWelcomePopup() {
 
 // Call this when the page loads
 window.addEventListener('load', initWelcomePopup);
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("click", function (event) {
+        const card = event.target.closest(".product-card");
+
+        if (card && !event.target.closest('.like-button, .condition-tag, .category-tag, .more')) {
+            // Extract product information from the clicked card
+            const clickedProduct = {
+                listingID: card.dataset.listingId,
+                title: card.dataset.title,
+                description: card.dataset.description,
+                condition: card.dataset.condition,
+                category: card.dataset.category,
+                price: card.dataset.price,
+                likes: card.dataset.likes,
+                location: card.dataset.dealLocation
+            };
+            localStorage.setItem('clickedProduct', JSON.stringify(clickedProduct));
+            // Redirect to the product page
+            window.location.href = "../product/product.html";
+            
+        }
+    });
+});
+
+
+
+

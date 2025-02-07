@@ -145,10 +145,12 @@ async function handleListingSubmit(event) {
     elements.submitButton.disabled = true;
 
     const meetupCheckbox = document.getElementById("meetup");
+    const deliveryCheckbox = document.getElementById("delivery");
     const dealLocationInput = document.getElementById("dealLocation");
 
     // Only include dealLocation if meetup is selected
-    const dealLocation = meetupCheckbox.checked ? dealLocationInput.value : null;
+    const dealLocation = meetupCheckbox.checked ? dealLocationInput.value : "NA";
+    const delivery = deliveryCheckbox.checked ? true : false;
 
     const formData = {
         title: elements.title.value,
@@ -156,7 +158,8 @@ async function handleListingSubmit(event) {
         price: elements.price.value,
         category: elements.categoryInput.value,
         condition: elements.conditionInput.value,
-        dealLocation: dealLocation // Only include if necessary
+        dealLocation: dealLocation,
+        delivery: delivery
     };
 
     const validationErrors = validateForm(formData);

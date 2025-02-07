@@ -15,7 +15,7 @@ body {
     gap: 48px;
     background: white;
     border-radius: 16px;
-    padding: 32px;
+    padding: 100px 32px 32px 32px;
 }
 
 /* Image carousel styles */
@@ -131,15 +131,20 @@ body {
     color: #1a1a1a;
 }
 
+.condition_container {
+    color: rgb(151, 151, 151);  
+}
+
 .condition {
     display: inline-block;
-    background: #ecfdf5;
-    color: #047857;
-    padding: 6px 12px;
+    color: black;
+    padding: 5px 0;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
 }
+
+
 
 .description {
     color: #4b5563;
@@ -154,10 +159,15 @@ body {
 }
 
 .deal-method h3 {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     margin-bottom: 8px;
     color: #1a1a1a;
+}
+
+.delivery_method {
+    border-bottom: 1px solid black;
+    padding: 15px 0 15px 0;
 }
 
 /* Offer form styles */

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+
+    <link rel="stylesheet" href="../nav/navbar.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <nav></nav>
+    <div class="profile-container">
+        <div class="profile-cover"></div>
+        <div class="profile-header">
+            <img src="https://picsum.photos/200" alt="Profile Picture" class="profile-picture">
+            <div class="profile-info">
+                <h1 class="username" id="username">Loading Failed</h1>
+                <p class="email" id="email"></p>
+                <p class="date">Joined on <span id="joinedOn"></span></p>
+            </div>
+            <a href="#" class="edit-icon">
+                <img src="../assets/edit.svg" alt="">
+                Edit Profile
+            </a>
+        </div>
+        <div class="tabs">
+            <div class="tab active" data-tab="listings">Listings</div>
+            <div class="tab" data-tab="liked">Liked Products</div>
+            <div class="tab" data-tab="reviews">Reviews</div>
+        </div>
+        <div id="listings" class="tab-content active">
+            <div class="product">Product 1</div>
+            <div class="product">Product 2</div>
+            <div class="product">Product 3</div>
+        </div>
+        <div id="liked" class="tab-content">
+            <div class="product">Liked Product 1</div>
+            <div class="product">Liked Product 2</div>
+            <div class="product">Liked Product 3</div>
+        </div>
+        <div id="reviews" class="tab-content">
+            <div class="product">Liked Psdfroduct 1</div>
+            <div class="product">Liked Prosdfduct 2</div>
+            <div class="product">Liked Psdfroduct 3</div>
+        </div>
+    </div>
+
+<script src="profile.js"></script>
+<script src="../nav/navbar.js"></script>
+</body>
+</html>
