@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Page</title>
-    <link rel="stylesheet" href="productStyle.css">
+    <link rel="stylesheet" href="../nav/navbar.css">
+    <link rel="stylesheet" href="product.css">
 </head>
 <body>
-    
-
-
-
+    <nav></nav>
     <div class="container">
         <div class="carousel-container">
             <div class="image-grid">
@@ -36,21 +34,18 @@
         </div>
 
         <div class="product-info">
-            <h1 class="title">Vintage Leather Armchair</h1>
-            <p class="description">Beautiful vintage leather armchair in excellent condition. Features solid oak frame and genuine leather upholstery. Perfect addition to any living room or study. This piece combines classic design with modern comfort.</p>
-            <span class="condition">Like New</span>
-            <div class="price">$599</div>
+            <h1 class="title"></h1>
+            <p class="description"></p>
+            <p class="condition_container">
+                Condition: <span class="condition"></span>
+            </p>
+            <div class="price"></div>
             
             <form class="offer-form">
                 <h3>Make an Offer</h3>
                 <input type="number" class="offer-input" placeholder="Enter your offer price" min="0">
                 <button type="submit" class="submit-offer">Submit Offer</button>
             </form>
-
-            <div class="deal-method">
-                <h3>Deal Method</h3>
-                <p>Local pickup only - Brooklyn, NY</p>
-            </div>
 
             <div class="seller-info">
                 <div class="seller-name">
@@ -59,8 +54,24 @@
                 <button class="chat-button">Chat with Seller</button>
             </div>
         </div>
+
+        <!-- Moved Deal Method outside product-info -->
+        <div class="deal-method">
+            <h3>Deal Method</h3>
+            <p class="delivery_method">Delivery</p>
+            <div id="map" style="height: 300px; width: 100%;"></div>
+
+            <p class="location">Local pickup only - Brooklyn, NY</p>
+            <form id="distanceForm">
+                <input type="text" id="origin" placeholder="Enter an address to calculate distance from the meet up location" required />
+                <button type="submit">Calculate Distance</button>
+            </form>
+            <div id="output" class="output"></div>
+        </div>
     </div>
 
-    <script src="productScipt.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnDMXRLXcYWw4tJ1vfHHH3r25YjrDfumA&libraries=places"></script>
+    <script src="product.js"></script>
+    <script src="../nav/navbar.js"></script>
 </body>
 </html>

@@ -136,6 +136,7 @@ async function handleSubmit(event) {
     const countryField = document.getElementById('countryDropdown');
     const nameField = document.getElementById('name');
     const emailField = document.getElementById('email');
+    const createdAt = new Date();
 
 
     const countryError = document.querySelector('.country-error');
@@ -237,7 +238,7 @@ async function handleSubmit(event) {
                 submitButton.textContent = 'Sign In';
                 return;
             }
-
+            
             // Create new user
             const response = await fetch(RESTDB_URL, {
                 method: 'POST',
@@ -245,12 +246,13 @@ async function handleSubmit(event) {
                     'Content-Type': 'application/json',
                     'x-apikey': RESTDB_API_KEY
                 },
+                
                 body: JSON.stringify({
                     email,
-                    hashedPassword, // Note: In a real application, password should be hashed
+                    hashedPassword,
                     name,
                     country,
-                    createdAt: new Date()
+                    createdAt
                 })
             });
 
@@ -261,7 +263,8 @@ async function handleSubmit(event) {
                 const user = {
                     name: name,
                     email: email,
-                    profilePicture: "https://example.com/profile.jpg"
+                    profilePicture: "https://example.com/profile.jpg",
+                    createdAt: createdAt
                 };
 
                 // Store the custom user object in localStorage
