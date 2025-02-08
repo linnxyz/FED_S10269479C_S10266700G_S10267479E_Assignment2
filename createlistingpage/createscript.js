@@ -1,16 +1,27 @@
 const RESTDB_LISTINGS_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings';
 const API_KEY = '677f31d996bc7400895f1141';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dtpvsevc7/upload';
+const CLOUDINARY_UPLOAD_PRESET = 'mokesellrestdb';
+const MAX_FILE_SIZE = 50000
 
 async function handleListingSubmit(event) {
     event.preventDefault(); 
 
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
-    const price = document.getElementById('price').value;
+    const title = document.getElementById('title').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const price = document.getElementById('price').value.trim();
     const category = document.getElementById('category').value;
     const condition = document.getElementById('condition').value;
+    const imageFile = document.getElementById('image').files[0];
+
+    if (!title || !description || !price || !category || !condition || !imageFile) {
+        alert("Please fill in all fields and upload an image.");
+        return;
+    }
 
     try {
+        let imageUrl = await uploadImageToCloudinary(imageFile);
+        
         const response = await fetch(RESTDB_LISTINGS_URL, {
             method: 'POST',
             headers: {
@@ -22,7 +33,8 @@ async function handleListingSubmit(event) {
                 description,
                 category,
                 price,
-                condition
+                condition,
+                image: imageUrl  // Using "image" as the key
             })
         });
 
@@ -30,8 +42,7 @@ async function handleListingSubmit(event) {
             throw new Error(`Failed to create listing: ${response.status} ${response.statusText}`);
         }
 
-        const result = await response.json();
-        alert("Listing created successfully: " + JSON.stringify(result));
+        alert("Listing created successfully!");
         document.getElementById('listingForm').reset();
     } catch (error) {
         console.error("Error:", error);
@@ -137,3 +148,21 @@ async function handleModifySubmit(event) {
         alert("An error occurred while modifying the listing: " + error.message);
     }
 }
+async function uploadImageToCloudinary(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+    const response = await fetch(CLOUDINARY_UPLOAD_URL, {
+        method: 'POST',
+        body: formData
+    });
+
+    if (!response.ok) {
+        throw new Error('Image upload failed');
+    }
+
+    const data = await response.json();
+    return data.secure_url;
+}
+
