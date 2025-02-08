@@ -313,6 +313,71 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const row1 = document.getElementById('row1');
+    const row2 = document.getElementById('row2');
+
+    // Clone the review widgets to create a seamless loop
+    row1.innerHTML += row1.innerHTML;
+    row2.innerHTML += row2.innerHTML;
+
+    // Function to reset animation
+    function resetAnimation(element) {
+        element.style.animation = 'none';
+        element.offsetHeight; // Trigger reflow
+        element.style.animation = null;
+    }
+
+    // Reset animations when they complete
+    row1.addEventListener('animationiteration', function() {
+        resetAnimation(row1);
+    });
+
+    row2.addEventListener('animationiteration', function() {
+        resetAnimation(row2);
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    const faqSection = document.querySelector('.faq-section');
+    const helpContainer = document.getElementById('helpContainer');
+
+    // FAQ item click handling
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+            // Close all other open items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                }
+            });
+
+            // Toggle the clicked item
+            item.classList.toggle('active');
+        });
+    });
+
+    // Scroll handling for the Help container
+    function handleScroll() {
+        const rect = faqSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Check if the FAQ section is near the center of the viewport
+        if (rect.top <= windowHeight / 2 && rect.bottom >= windowHeight / 2) {
+            helpContainer.classList.add('visible');
+        } else {
+            helpContainer.classList.remove('visible');
+        }
+    }
+
+    // Initial check and add scroll event listener
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+});
+
+
 
 
 
