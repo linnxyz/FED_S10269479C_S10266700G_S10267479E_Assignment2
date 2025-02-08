@@ -159,7 +159,9 @@ async function handleListingSubmit(event) {
         category: elements.categoryInput.value,
         condition: elements.conditionInput.value,
         dealLocation: dealLocation,
-        delivery: delivery
+        delivery: delivery,
+        sellerID: JSON.parse(localStorage.getItem("user")).id,
+        sellerName: JSON.parse(localStorage.getItem("user")).name
     };
 
     const validationErrors = validateForm(formData);

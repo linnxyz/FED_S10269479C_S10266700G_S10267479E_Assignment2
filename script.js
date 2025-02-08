@@ -19,7 +19,9 @@ function createProductCard(product) {
         category: sanitizeHTML(product.category),
         price: Number(product.price).toFixed(2),
         likes: parseInt(product.likes) || 0,
-        dealLocation: sanitizeHTML(product.dealLocation)
+        dealLocation: sanitizeHTML(product.dealLocation),
+        sellerID: sanitizeHTML(product.sellerID),
+        sellerName: sanitizeHTML(product.sellerName)
     };
 
     return `
@@ -31,7 +33,9 @@ function createProductCard(product) {
             data-category="${sanitizedProduct.category}"
             data-price="${sanitizedProduct.price}"
             data-likes="${sanitizedProduct.likes}"
-            data-deal-location="${sanitizedProduct.dealLocation}">
+            data-deal-location="${sanitizedProduct.dealLocation}"
+            data-seller-id="${sanitizedProduct.sellerID}"
+            data-seller-name="${sanitizedProduct.sellerName}">
             <div class="product-image"></div>
             <div class="product-info">
                 <div id="listingID"></div>
@@ -297,7 +301,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 category: card.dataset.category,
                 price: card.dataset.price,
                 likes: card.dataset.likes,
-                location: card.dataset.dealLocation
+                location: card.dataset.dealLocation,
+                sellerID: card.dataset.sellerId,
+                sellerName: card.dataset.sellerName
             };
             localStorage.setItem('clickedProduct', JSON.stringify(clickedProduct));
             // Redirect to the product page
