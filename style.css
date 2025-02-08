@@ -57,6 +57,7 @@ body {
 .product-card {
     background: white;
     border-radius: 8px;
+    border: 1px solid rgb(224, 224, 224);
     transition: box-shadow 0.2s;
 }
 
@@ -67,9 +68,11 @@ body {
 .product-image {
     width: 100%;
     height: 160px;
-    background-color: #f3f4f6;
     position: relative;
     border-radius: 8px 8px 0 0;
+    background-size: cover; /* Ensures the image covers the entire div */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
 }
 
 .product-info {
@@ -335,11 +338,13 @@ body {
 .review-widget h3 {
     margin: 0 0 10px 0;
     color: var(--primary-color);
+    font-size: 25px;
 }
 
 .review-widget p {
     margin: 0 0 10px 0;
     color: var(--text-color);
+    font-size: 15px;
 }
 
 .rating {
