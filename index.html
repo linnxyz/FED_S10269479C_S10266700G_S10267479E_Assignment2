@@ -53,7 +53,6 @@
         <section class="trending-section">
             <h2 class="section-title">Trending Products</h2>
             <div class="trending-products" id="trendingProducts">
-
                 <!-- Skeleton Loader -->
                 <div class="product-card skeleton-card loading hidden">
                     <div class="skeleton skeleton-image"></div>
@@ -125,7 +124,6 @@
                     </div>
                 </div>
             </div>
-
         </section>
 
         <section class="general-section">
@@ -133,11 +131,112 @@
             <div class="products-grid" id="productsGrid">
             </div>
         </section>
-        
+
+        <div class="more-button">
+            <button id="nextPageButton">Next Page</button>
+        </div>
+        <section class="reviews-container">
+            <h2 class="section-title">Reviews</h2>
+            <div class="review-row" id="row1">
+                <div class="review-widget">
+                    <h3>John Doe</h3>
+                    <p>Great product! Highly recommended.</p>
+                    <div class="rating">★★★★☆</div>
+                </div>
+                <div class="review-widget">
+                    <h3>Jane Smith</h3>
+                    <p>Excellent service and fast delivery.</p>
+                    <div class="rating">★★★★★</div>
+                </div>
+                <div class="review-widget">
+                    <h3>Mike Johnson</h3>
+                    <p>Good quality for the price.</p>
+                    <div class="rating">★★★★☆</div>
+                </div>
+                <div class="review-widget">
+                    <h3>Emily Brown</h3>
+                    <p>Very satisfied with my purchase.</p>
+                    <div class="rating">★★★★★</div>
+                </div>
+            </div>
+            <div class="review-row" id="row2">
+                <div class="review-widget">
+                    <h3>David Lee</h3>
+                    <p>Amazing customer support!</p>
+                    <div class="rating">★★★★★</div>
+                </div>
+                <div class="review-widget">
+                    <h3>Sarah Wilson</h3>
+                    <p>Product exceeded my expectations.</p>
+                    <div class="rating">★★★★☆</div>
+                </div>
+                <div class="review-widget">
+                    <h3>Tom Harris</h3>
+                    <p>Will definitely buy again.</p>
+                    <div class="rating">★★★★★</div>
+                </div>
+                <div class="review-widget">
+                    <h3>Lisa Taylor</h3>
+                    <p>Fantastic experience overall.</p>
+                    <div class="rating">★★★★★</div>
+                </div>
+            </div>
+        </section>
+        <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-column">
+                    <div class="faq-item">
+                        <button class="faq-question">What is your return policy?</button>
+                        <div class="faq-answer">
+                            <p>We offer a 30-day return policy for all unused items in their original packaging. Please contact our customer service team to initiate a return.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">How long does shipping take?</button>
+                        <div class="faq-answer">
+                            <p>Shipping times vary depending on your location. Typically, domestic orders are delivered within 3-5 business days, while international orders may take 7-14 business days.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Do you offer international shipping?</button>
+                        <div class="faq-answer">
+                            <p>Yes, we ship to most countries worldwide. Shipping costs and delivery times may vary based on the destination.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-column">
+                    <div class="faq-item">
+                        <button class="faq-question">What payment methods do you accept?</button>
+                        <div class="faq-answer">
+                            <p>We accept all major credit cards, PayPal, and Apple Pay. We ensure secure transactions for all payment methods.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">How can I track my order?</button>
+                        <div class="faq-answer">
+                            <p>Once your order is shipped, you'll receive a tracking number via email. You can use this number to track your package on our website or the carrier's site.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Do you offer gift wrapping?</button>
+                        <div class="faq-answer">
+                            <p>Yes, we offer gift wrapping services for a small additional fee. You can select this option during checkout.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="more-button">
-        <button id="nextPageButton">Next Page</button>
+    <div id="helpContainer" class="help-container">
+        <div id="helpMessage" class="help-message">
+            Need more help? Click here to learn more about us, chat with our AI or receive live support.
+        </div>
+        <a href="/faq-and-help" id="moreHelpButton" class="more-help-button" aria-label="More FAQ and Help">
+            <span class="more-help-icon">?</span>
+        </a>
     </div>
+
     <div class="welcome-popup">
         <span class="close">✕</span>
         <h3>Welcome to MokeSell! 🎉</h3>
@@ -147,7 +246,50 @@
             <button class="secondary" onclick="window.location.href='/support'">View Profile</button>
         </div>
     </div>
-    
+    <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#1e1299" fill-opacity="1" d="M0,224L21.8,213.3C43.6,203,87,181,131,186.7C174.5,192,218,224,262,245.3C305.5,267,349,277,393,266.7C436.4,256,480,224,524,213.3C567.3,203,611,213,655,229.3C698.2,245,742,267,785,272C829.1,277,873,267,916,245.3C960,224,1004,192,1047,181.3C1090.9,171,1135,181,1178,186.7C1221.8,192,1265,192,1309,186.7C1352.7,181,1396,171,1418,165.3L1440,160L1440,320L1418.2,320C1396.4,320,1353,320,1309,320C1265.5,320,1222,320,1178,320C1134.5,320,1091,320,1047,320C1003.6,320,960,320,916,320C872.7,320,829,320,785,320C741.8,320,698,320,655,320C610.9,320,567,320,524,320C480,320,436,320,393,320C349.1,320,305,320,262,320C218.2,320,175,320,131,320C87.3,320,44,320,22,320L0,320Z"></path></svg>
+    <footer class="mokesell-footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="/assets/logo_white.svg" alt="MokeSell Logo" class="logo">
+            </div>
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h3>General</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                Contact us: <strong>hello@mokesell.com</strong>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2023 MokeSell. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
