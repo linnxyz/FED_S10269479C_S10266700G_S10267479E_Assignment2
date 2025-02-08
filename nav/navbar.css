@@ -13,8 +13,9 @@
 }
 
 .logo {
-    height: 35px;
-    margin-right: 2rem;
+    height: 30px;
+    width: 170px;
+    margin-right: 3rem;
 }
 
 .search-bar {
@@ -63,7 +64,7 @@
     margin-left: auto;
 }
 
-.profile, .notification, .cart {
+.profile, .notification {
     cursor: pointer;
     position: relative;
 }

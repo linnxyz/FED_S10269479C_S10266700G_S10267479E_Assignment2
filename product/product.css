@@ -144,31 +144,114 @@ body {
     font-weight: 500;
 }
 
-
-
 .description {
     color: #4b5563;
     font-size: 16px;
     line-height: 1.7;
 }
 
+/* Deal Method Section Styles */
 .deal-method {
-    padding: 16px;
-    background: #f8fafc;
+    background-color: #f9f9f9;
     border-radius: 12px;
+    padding: 20px;
+    max-width: 800px;
 }
 
 .deal-method h3 {
-    font-size: 20px;
+    font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 8px;
-    color: #1a1a1a;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.deal-method p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 16px;
 }
 
 .delivery_method {
-    border-bottom: 1px solid black;
-    padding: 15px 0 15px 0;
+    font-weight: 500;
+    color: #444;
+    font-size: 1.1rem;
 }
+
+#map {
+    border-radius: 8px;
+    margin-top: 16px;
+    background-color: #e4e4e4; /* Default background color if map doesn't load */
+}
+
+form {
+    margin-top: 20px;
+}
+
+form input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+.output {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.output p {
+    font-size: 20px;
+    margin: 10px;
+    color: black;
+}
+
+/* Add small spacing between sections */
+.deal-method > * {
+    margin-bottom: 16px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .deal-method {
+        padding: 16px;
+    }
+
+    .deal-method h3 {
+        font-size: 1.25rem;
+    }
+
+    form input,
+    form button {
+        padding: 10px;
+    }
+}
+
 
 /* Offer form styles */
 .offer-form {

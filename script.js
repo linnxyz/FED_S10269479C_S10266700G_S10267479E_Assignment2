@@ -1,5 +1,5 @@
-const RESTDB_API_KEY = '677f31d996bc7400895f1141';
-const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings?';
+// const RESTDB_API_KEY = '677f31d996bc7400895f1141';
+// const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings?';
 let page = 1;
 let loading = false;
 let hasMore = true;
@@ -21,7 +21,9 @@ function createProductCard(product) {
         likes: parseInt(product.likes) || 0,
         dealLocation: sanitizeHTML(product.dealLocation),
         sellerID: sanitizeHTML(product.sellerID),
-        sellerName: sanitizeHTML(product.sellerName)
+        sellerName: sanitizeHTML(product.sellerName),
+        coverImage: sanitizeHTML(product.coverImage),
+        images: sanitizeHTML(product.images)
     };
 
     return `
@@ -35,8 +37,9 @@ function createProductCard(product) {
             data-likes="${sanitizedProduct.likes}"
             data-deal-location="${sanitizedProduct.dealLocation}"
             data-seller-id="${sanitizedProduct.sellerID}"
-            data-seller-name="${sanitizedProduct.sellerName}">
-            <div class="product-image"></div>
+            data-seller-name="${sanitizedProduct.sellerName}"
+            data-images="${sanitizedProduct.images}">
+            <div class="product-image" style="background-image: url('${sanitizedProduct.coverImage}')"></div>
             <div class="product-info">
                 <div id="listingID"></div>
                 <div class="product-header">
@@ -303,7 +306,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 likes: card.dataset.likes,
                 location: card.dataset.dealLocation,
                 sellerID: card.dataset.sellerId,
-                sellerName: card.dataset.sellerName
+                sellerName: card.dataset.sellerName,
+                images: card.dataset.images
             };
             localStorage.setItem('clickedProduct', JSON.stringify(clickedProduct));
             // Redirect to the product page

@@ -1,6 +1,8 @@
 // Constants
 const RESTDB_LISTINGS_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings';
 const API_KEY = '677f31d996bc7400895f1141';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dtpvsevc7/upload';
+const CLOUDINARY_UPLOAD_PRESET = 'mokesellrestdb';
 const MAX_IMAGES = 5;
 const MAX_WORDS = 100;
 
@@ -174,6 +176,17 @@ async function handleListingSubmit(event) {
     }
 
     try {
+        // Upload images to Cloudinary before submitting
+        const imageUrls = await uploadImagesToCloudinary(state.uploadedImages);
+
+        if (!imageUrls.length) throw new Error("Failed to upload images");
+
+        // Rearrange images so the cover image comes first
+        const orderedImages = [imageUrls[state.coverImageIndex], ...imageUrls.filter((_, i) => i !== state.coverImageIndex)];
+
+        const imageString = orderedImages.join(",");
+
+        // Send the listing data including the image URLs
         const response = await fetch(RESTDB_LISTINGS_URL, {
             method: 'POST',
             headers: {
@@ -182,8 +195,8 @@ async function handleListingSubmit(event) {
             },
             body: JSON.stringify({
                 ...formData,
-                coverImage: state.uploadedImages[state.coverImageIndex],
-                images: state.uploadedImages
+                coverImage: orderedImages[0],
+                images: imageString // Comma-separated image URLs
             })
         });
 
@@ -205,7 +218,31 @@ async function handleListingSubmit(event) {
     }
 }
 
+// Cloudinary image upload helper
+async function uploadImagesToCloudinary(files) {
+    const uploadPromises = files.map(file => uploadImageToCloudinary(file));
+    return Promise.all(uploadPromises);
+}
 
+async function uploadImageToCloudinary(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET); // Replace with your Cloudinary upload preset
+
+    const response = await fetch(CLOUDINARY_UPLOAD_URL, {
+        method: 'POST',
+        body: formData
+    });
+
+    if (!response.ok) {
+        throw new Error('Image upload failed');
+    }
+
+    const data = await response.json();
+    return data.secure_url; // Return the Cloudinary image URL
+}
+
+// Validate form fields
 function validateForm(formData) {
     const errors = [];
 
@@ -221,6 +258,7 @@ function validateForm(formData) {
     return errors;
 }
 
+// Reset form
 function resetForm() {
     elements.form.reset();
     elements.conditionItems.forEach(i => i.classList.remove('selected'));
@@ -241,6 +279,7 @@ function initializeForm() {
     setupSelectors(elements.conditionItems, elements.conditionInput);
     setupSelectors(elements.categoryItems, elements.categoryInput);
 }
+
 document.getElementById("delivery").addEventListener("change", toggleLocationField);
 document.getElementById("meetup").addEventListener("change", toggleLocationField);
 
@@ -255,6 +294,9 @@ function toggleLocationField() {
         dealLocationGroup.classList.add("hidden");
     }
 }
+
+// Initialize the form
+document.addEventListener('DOMContentLoaded', initializeForm);
 
 function initAutocomplete() {
     const originInput = document.getElementById('dealLocation');
@@ -272,6 +314,3 @@ function initAutocomplete() {
 
 // Ensure the script loads before initializing
 document.addEventListener('DOMContentLoaded', initAutocomplete);
-
-// Initialize the form
-document.addEventListener('DOMContentLoaded', initializeForm);
