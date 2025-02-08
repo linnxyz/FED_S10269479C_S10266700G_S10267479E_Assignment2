@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review System Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Review System Test</h1>
+
+    <!-- Review Form -->
+    <div class="review-form">
+        <h2>Add a Review</h2>
+        <input type="text" id="username" placeholder="Your Name" required>
+        <div class="rating">
+            Rating: 
+            <div id="stars">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+        </div>
+        <textarea id="review-text" placeholder="Write your review here..." rows="4" required></textarea>
+        <button onclick="submitReview()">Submit Review</button>
+    </div>
+
+    <!-- Reviews Display -->
+    <h2>Reviews</h2>
+    <div id="reviews-list" class="review-list">
+        <!-- Reviews will be inserted here -->
+    </div>
+
+    <script src="review.js"></script>
+</body>
+</html>
