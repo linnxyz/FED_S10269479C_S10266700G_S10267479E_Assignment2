@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="listing-form-container">
+        <h2>Search Listing by ID</h2>
+        <input type="text" id="listingIdInput" class="form-input" placeholder="Enter Listing ID">
+        <button onclick="handleFetchListing()" class="submit-button">Search</button>
+    </div>
+    
+    <div id="listingsContainer"></div>
+    <input type="number" id="listingIdInput" placeholder="Enter Listing ID">
+<button onclick="fetchAndDisplayListing()">Fetch Listing</button>
+<div id="listingsContainer"></div>
+
+    
+    <script src="test.js"></script>
+</body>
+</html>
