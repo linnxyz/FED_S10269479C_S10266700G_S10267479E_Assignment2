@@ -257,10 +257,15 @@ async function handleSubmit(event) {
             });
 
             if (response.ok) {
+                const responseData = await response.json(); // This will parse the response into JSON
+                const userId = responseData._id; // Assuming RESTDB returns an _id field for the newly created user
+
                 showAlert('Account created successfully! Redirecting you back to the log in page...', 'success');
                 localStorage.setItem('firstTime', JSON.stringify(true));
+                
                 // Example custom user object with properties you define
                 const user = {
+                    id: userId,  // Add the auto-incremented ID to the user object
                     name: name,
                     email: email,
                     profilePicture: "https://example.com/profile.jpg",
@@ -269,6 +274,7 @@ async function handleSubmit(event) {
 
                 // Store the custom user object in localStorage
                 localStorage.setItem('user', JSON.stringify(user));
+                
                 window.location.href = "../captcha/captchaIndex.html";
 
             } else {

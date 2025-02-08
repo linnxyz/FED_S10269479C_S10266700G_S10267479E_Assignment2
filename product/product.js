@@ -61,7 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.description').textContent = clickedProduct.description;
         document.querySelector('.condition').textContent = clickedProduct.condition;
         document.querySelector('.price').textContent = `$${clickedProduct.price}`;
-        document.querySelector('.location').textContent = clickedProduct.location
+        document.querySelector('.location').textContent = clickedProduct.location;
+        document.querySelector('.seller-name').textContent = clickedProduct.sellerName;
 
         // You can add product images from a predefined list or from the product data
         // Assuming you have images in clickedProduct or use a placeholder for this example
