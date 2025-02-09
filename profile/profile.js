@@ -183,22 +183,218 @@ function createProductCard(product) {
     `;
 }
 
-// Helper function for text truncation
-function truncateText(text, words) {
-    const wordArray = text.split(' ');
-    if (wordArray.length > words) {
-        return wordArray.slice(0, words).join(' ') + '...';
-    }
-    return text;
+// Add modal HTML to the page
+document.body.insertAdjacentHTML('beforeend', `
+    <div id="modifyModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Modify Listing</h2>
+            <form id="modifyForm">
+                <input type="hidden" id="modifyId">
+                <div>
+                    <label for="newTitle">Title:</label>
+                    <input type="text" id="newTitle" required>
+                </div>
+                <div>
+                    <label for="newDescription">Description:</label>
+                    <textarea id="newDescription" required></textarea>
+                </div>
+                <div>
+                    <label for="newPrice">Price:</label>
+                    <input type="number" id="newPrice" required>
+                </div>
+                <div>
+                    <label for="newCategory">Category:</label>
+                    <input type="text" id="newCategory" required>
+                </div>
+                <div>
+                    <label for="newCondition">Condition:</label>
+                    <input type="text" id="newCondition" required>
+                </div>
+                <div>
+                    <label for="newImages">Images:</label>
+                    <input type="file" id="newImages" multiple accept="image/*">
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+`);
+
+// Add modal functionality
+async function openModifyModal(id) {
+    const modal = document.getElementById('modifyModal');
+    const card = document.querySelector(`[data-id="${id}"]`);
+    
+    document.getElementById('modifyId').value = id;
+    document.getElementById('newTitle').value = card.dataset.title;
+    document.getElementById('newDescription').value = card.dataset.description;
+    document.getElementById('newPrice').value = card.dataset.price;
+    document.getElementById('newCategory').value = card.dataset.category;
+    document.getElementById('newCondition').value = card.dataset.condition;
+    
+    modal.style.display = 'block';
 }
 
-// Helper function for HTML sanitization
-function sanitizeHTML(str) {
-    if (!str) return '';
-    return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+// Handle delete function
+async function handleDelete(id) {
+    if (!confirm('Are you sure you want to delete this listing?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`${RESTDB_URL}${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-apikey': RESTDB_API_KEY
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to delete listing: ${response.status}`);
+        }
+
+        // Remove the card from the UI
+        document.querySelector(`[data-id="${id}"]`).remove();
+        alert('Listing deleted successfully');
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to delete listing: ' + error.message);
+    }
 }
+
+// Handle modify form submission
+document.getElementById('modifyForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const id = document.getElementById('modifyId').value;
+    const imageFiles = document.getElementById('newImages').files;
+    
+    try {
+        let imageUrls = [];
+        // Upload new images if provided
+        if (imageFiles.length > 0) {
+            for (let file of imageFiles) {
+                const imageUrl = await uploadImageToCloudinary(file);
+                imageUrls.push(imageUrl);
+            }
+        }
+
+        const updateData = {
+            title: document.getElementById('newTitle').value.trim(),
+            description: document.getElementById('newDescription').value.trim(),
+            price: parseFloat(document.getElementById('newPrice').value),
+            category: document.getElementById('newCategory').value.trim(),
+            condition: document.getElementById('newCondition').value.trim(),
+        };
+
+        // Only add images if new ones were uploaded
+        if (imageUrls.length > 0) {
+            updateData.images = imageUrls.join(',');
+            updateData.coverImage = imageUrls[0];
+        }
+
+        const response = await fetch(`${RESTDB_URL}${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-apikey': RESTDB_API_KEY
+            },
+            body: JSON.stringify(updateData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to modify listing: ${response.status}`);
+        }
+
+        // Close modal and refresh listings
+        document.getElementById('modifyModal').style.display = 'none';
+        fetchUserListings();
+        alert('Listing modified successfully');
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to modify listing: ' + error.message);
+    }
+});
+
+// Close modal when clicking the close button or outside the modal
+document.querySelector('.close').onclick = () => {
+    document.getElementById('modifyModal').style.display = 'none';
+};
+
+window.onclick = (event) => {
+    const modal = document.getElementById('modifyModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+};
+
+// Add some basic modal styles
+const styles = `
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 5px;
+        width: 80%;
+        max-width: 500px;
+    }
+    .close {
+        float: right;
+        cursor: pointer;
+        font-size: 28px;
+    }
+    .close:hover {
+        color: #666;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    .modify-button, .delete-button {
+        padding: 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .modify-button {
+        background-color: #ffd700;
+    }
+    .delete-button {
+        background-color: #ff4444;
+    }
+    #modifyForm {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    #modifyForm input, #modifyForm textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    #modifyForm button {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+`;
+
+// Add styles to the page
+const styleSheet = document.createElement('style');
+styleSheet.textContent = styles;
+document.head.appendChild(styleSheet);
