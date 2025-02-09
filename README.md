@@ -9,6 +9,7 @@ This repository contains the source code for MokeSell, including the frontend an
 
 -   **HTML, CSS, JavaScript** for the frontend
 -   **RestDB** for database
+-   **Cloudinary** for image hosting
 
 This documentation explains the functionality,  structure and the technology used in the project. 
 
