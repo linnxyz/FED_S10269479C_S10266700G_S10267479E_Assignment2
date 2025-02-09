@@ -4,38 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mokesell Help Centre</title>
-    <link rel="stylesheet" href="supportteam.css">
+    <link rel="stylesheet" href="account.css">
 </head>
 <body>
-
     <header>
-        <img src="logo.png" alt="Mokesell Logo" class="logo">
-        <nav>
-            <a href="../help/help.html">Mokesell Help Centre</a> >
-            <a href="#">Mokesell Support</a> >
-        </nav>
+        <div class="header-container">
+            <img src="../assets/logo.svg" alt="Mokesell Logo" class="logo">
+            <nav class="breadcrumb">
+                <a href="../help/help.html">Mokesell Help Centre</a>
+                <span class="separator">›</span>
+                <a href="#">My account</a>
+                <span class="separator">›</span>
+                <a href="#">Sign up and login</a>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <h1>Can I have more than one Carousell account?</h1>
+    <main class="content-container">
+        <h1>Can I have more than one Mokesell account?</h1>
 
-        <h2>In line with Carousell’s commitment to creating a safe marketplace, you may only have one account on Carousell unless expressly permitted.</h2>
-        <p>We understand that every seller and buyer is unique and may have different needs. If you require more than one account on Carousell, let us know, and we’ll assess your request.</p>
+        <p class="highlight-text">
+            In line with Mokesell's commitment to creating a safe marketplace, you may only have <strong>one account</strong> on Mokesell unless expressly permitted.
+        </p>
+
+        <p class="regular-text">
+            We understand that every seller and buyer is unique and may have different needs. If you require more than one account on Mokesell, let us know and we'll assess your request.
+        </p>
 
         <h2>What is an account limit?</h2>
-        <p>Upon signing up for an account, you may encounter a pop-up message informing you that you've reached your account limit. This happens because you already have an existing Carousell account. To resume your Carousell activities, simply log in to your existing Carousell account.</p>
+        
+        <p class="regular-text">
+            Upon signing up for an account, you may encounter a pop-up message informing you that you've reached your account limit. This happens because you already have an existing Mokesell account. To resume your Mokesell activities, simply log in to your existing Mokesell account.
+        </p>
 
-        <p>If you've deactivated your account previously, you may reactivate your account instead of creating a new one.</p>
+        <p class="regular-text">
+            If you've deactivated your account previously, you may reactivate your account instead of creating a new account.
+        </p>
 
-        <p>If you've forgotten your password for an existing Carousell account, you may reset it in forget password</a>.</p>
+        <p class="regular-text">
+            If you've forgotten your password for an existing Mokesell account, you may <a href="#" class="text-link">reset it here</a>.
+        </p>
+
+        <div class="account-limit-img">
+            <img src="../images/Screenshot 2024-04-30 at 6.17.56 PM.png" alt="Account limit notification">
+        </div>
+
+        <div class="feedback-section">
+            <p>Was this article helpful?</p>
+            <div class="feedback-buttons">
+                <button class="feedback-btn" id="yes-btn">✔ Yes</button>
+                <button class="feedback-btn" id="no-btn">✖ No</button>
+            </div>
+        </div>
     </main>
 
-    <section class="feedback">
-        <p>Was this article helpful?</p>
-        <button class="feedback-btn" id="yes-btn">✔ Yes</button>
-        <button class="feedback-btn" id="no-btn">✖ No</button>
-    </section>
     <script src="supportteam.js"></script>
-    
 </body>
 </html>
