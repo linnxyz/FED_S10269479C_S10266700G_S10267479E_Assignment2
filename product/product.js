@@ -143,7 +143,7 @@ form.addEventListener('submit', (event) => {
         {
             origins: [origin],
             destinations: [destination],
-            travelMode: google.maps.TravelMode.TRANSIT, // You can change this if needed (e.g., DRIVING)
+            travelMode: google.maps.TravelMode.TRANSIT,
         },
         (response, status) => {
             if (status === google.maps.DistanceMatrixStatus.OK) {

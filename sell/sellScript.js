@@ -307,7 +307,6 @@ function initAutocomplete() {
     }
 
     originAutocomplete = new google.maps.places.Autocomplete(originInput, {
-        // Remove 'types' or set to 'establishment' to include places
         componentRestrictions: { country: "SG" } // Restrict to Singapore
     });
 }
