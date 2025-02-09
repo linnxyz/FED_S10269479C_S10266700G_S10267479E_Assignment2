@@ -1,56 +1,45 @@
-const RESTDB_API_KEY = '677f31d996bc7400895f1141';
-const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/contact';
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector("form");
 
-document.getElementById('contactForm').addEventListener('submit', async (event) => {
-  event.preventDefault(); // Prevent default form submission
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent default form submission
 
-  // Collect form data
-  const formData = {
-    firstName: document.getElementById('firstName').value,
-    lastName: document.getElementById('lastName').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    topic: document.getElementById('topic').value,
-    message: document.getElementById('message').value,
-  };
+    // Collect form data
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const topic = document.getElementById("topic").value;
+    const inquiry = document.getElementById("message").value;
 
-  try {
-    // Send data to RESTDB
-    const response = await fetch(RESTDB_URL, {
-      method: 'POST',
+    // Prepare data object
+    const contactData = {
+      firstname: firstName,
+      lastname: lastName,
+      email: email,
+      phonenum: phone,
+      topic: topic,
+      inquiry: inquiry
+    };
+
+    // Send data to RestDB
+    fetch("https://mokesellcustomers-cfe3.restdb.io/rest/contact", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'x-apikey': RESTDB_API_KEY,
+        "Content-Type": "application/json",
+        "x-apikey": "677f31d996bc7400895f1141", // Replace with a secure way to handle API keys
+        "Cache-Control": "no-cache"
       },
-      body: JSON.stringify(formData),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to store data in the database.');
-    }
-
-    const data = await response.json();
-
-    // Generate a receipt
-    generateReceipt(data);
-  } catch (error) {
-    console.error(error);
-    alert('Something went wrong. Please try again.');
-  }
+      body: JSON.stringify(contactData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        alert("Your message has been sent!");
+        form.reset(); // Clear form after submission
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again.");
+      });
+  });
 });
-
-// Function to generate a receipt
-function generateReceipt(data) {
-  const receiptDiv = document.getElementById('receipt');
-  receiptDiv.innerHTML = `
-    <h3>Receipt</h3>
-    <p><strong>First Name:</strong> ${data.firstName}</p>
-    <p><strong>Last Name:</strong> ${data.lastName}</p>
-    <p><strong>Email:</strong> ${data.email}</p>
-    <p><strong>Phone:</strong> ${data.phone}</p>
-    <p><strong>Topic:</strong> ${data.topic}</p>
-    <p><strong>Message:</strong> ${data.message}</p>
-    <p><strong>Submission ID:</strong> ${data._id}</p>
-  `;
-  receiptDiv.style.display = 'block';
-}

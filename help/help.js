@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Sample data for featured articles
     const featuredArticles = [
-        { title: "How do I contact the Support Team?", link: "#" },
+        { title: "How do I contact the Support Team?", link: "../News/Supportteam.html" },
         { title: "Can I have more than one MokeSell account?", link: "#" },
         { title: "What is Listing Quota", link: "#" },
         { title: "[Hong Kong] Category-based quota for all categories", link: "#" },
@@ -13,14 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { title: "[Malaysia] My order is cancelled, how do I get my money back?", link: "#" },
     ];
 
-    // Function to filter articles based on search input
-    function filterArticles(query) {
-        return featuredArticles.filter(article =>
-            article.title.toLowerCase().includes(query.toLowerCase())
-        );
-    }
-
-    // Function to display filtered results
+    // Function to display results
     function displayResults(results) {
         searchResults.innerHTML = ""; // Clear previous results
         if (results.length > 0) {
@@ -39,23 +32,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Show dropdown and filter results when typing
-    searchInput.addEventListener("input", function () {
-        const query = this.value.trim();
-        if (query !== "") {
-            const filteredResults = filterArticles(query);
-            displayResults(filteredResults);
-            searchDropdown.style.display = "block";
-        } else {
-            searchDropdown.style.display = "none";
+    // Function to filter articles based on search input
+    function filterArticles(query) {
+        if (query.trim() === "") {
+            return featuredArticles; // If empty, show all articles
         }
+        return featuredArticles.filter(article =>
+            article.title.toLowerCase().includes(query.toLowerCase())
+        );
+    }
+
+    // Show dropdown and display all articles when clicking on the search input
+    searchInput.addEventListener("focus", function () {
+        searchDropdown.style.display = "block";
+        displayResults(featuredArticles); // Show all articles initially
     });
 
-    // Show dropdown when clicking on the search input
-    searchInput.addEventListener("focus", function () {
-        if (this.value.trim() !== "") {
-            searchDropdown.style.display = "block";
-        }
+    // Filter results as user types
+    searchInput.addEventListener("input", function () {
+        const query = this.value.trim();
+        const filteredResults = filterArticles(query);
+        displayResults(filteredResults);
     });
 
     // Hide dropdown when clicking outside
@@ -70,16 +67,3 @@ document.addEventListener("DOMContentLoaded", function () {
         event.stopPropagation();
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
