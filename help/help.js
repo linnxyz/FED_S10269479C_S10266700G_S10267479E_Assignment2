@@ -108,3 +108,108 @@ document.addEventListener('DOMContentLoaded', () => {
         expandedView.classList.remove('hidden');
     }
 });
+
+
+// Sample articles data - you can expand this with more articles
+const articles = [
+    {
+        title: "How do I contact the Support Team?",
+        url: "../News/Supportteam.html",
+        keywords: ["contact", "support", "help", "team"]
+    },
+    {
+        title: "Can I have more than one MokeSell account?",
+        url: "../News/account.html",
+        keywords: ["account", "multiple", "create"]
+    },
+    {
+        title: "What is Listing Quota",
+        url: "../News/quota.html",
+        keywords: ["listing", "quota", "limit", "sell"]
+    }
+    // Add more articles here
+];
+
+// Get DOM elements
+const searchInput = document.getElementById('search-input');
+const searchDropdown = document.getElementById('search-dropdown');
+const searchResults = document.getElementById('search-results');
+
+// Show dropdown when clicking on search input
+searchInput.addEventListener('click', () => {
+    searchDropdown.style.display = 'block';
+    // Show all articles initially
+    displayResults(articles);
+});
+
+// Hide dropdown when clicking outside
+document.addEventListener('click', (event) => {
+    if (!searchInput.contains(event.target) && !searchDropdown.contains(event.target)) {
+        searchDropdown.style.display = 'none';
+    }
+});
+
+// Filter articles based on search input
+searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const filteredArticles = filterArticles(searchTerm);
+    displayResults(filteredArticles);
+});
+
+// Filter articles based on search term
+function filterArticles(searchTerm) {
+    if (!searchTerm) return articles;
+    
+    return articles.filter(article => {
+        const titleMatch = article.title.toLowerCase().includes(searchTerm);
+        const keywordMatch = article.keywords.some(keyword => 
+            keyword.toLowerCase().includes(searchTerm)
+        );
+        return titleMatch || keywordMatch;
+    });
+}
+
+// Display filtered results in the dropdown
+function displayResults(filteredArticles) {
+    searchResults.innerHTML = '';
+    
+    if (filteredArticles.length === 0) {
+        searchResults.innerHTML = '<li class="no-results">No articles found</li>';
+        return;
+    }
+
+    filteredArticles.forEach(article => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = article.url;
+        a.textContent = article.title;
+        li.appendChild(a);
+        searchResults.appendChild(li);
+    });
+}
+
+// Add keyboard navigation
+searchInput.addEventListener('keydown', (e) => {
+    const items = searchResults.getElementsByTagName('li');
+    let focusedItem = searchResults.querySelector('li:focus-within');
+    let index = Array.from(items).indexOf(focusedItem);
+
+    switch (e.key) {
+        case 'ArrowDown':
+            e.preventDefault();
+            if (index < items.length - 1) {
+                items[index + 1].querySelector('a').focus();
+            } else {
+                items[0].querySelector('a').focus();
+            }
+            break;
+        case 'ArrowUp':
+            e.preventDefault();
+            if (index > 0) {
+                items[index - 1].querySelector('a').focus();
+            } else {
+                items[items.length - 1].querySelector('a').focus();
+            }
+            break;
+    }
+});
