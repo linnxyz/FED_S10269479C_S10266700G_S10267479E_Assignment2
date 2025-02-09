@@ -1,3 +1,7 @@
+const RESTDB_LISTINGS_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings';
+const API_KEY = '677f31d996bc7400895f1141';
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // Get the clickedProduct from localStorage
     const clickedProduct = JSON.parse(localStorage.getItem('clickedProduct'));
@@ -193,4 +197,77 @@ function initMap() {
 
 document.addEventListener("DOMContentLoaded", () => {
     initMap();
+    async function fetchReviews() {
+        try {
+            const clickedProduct = JSON.parse(localStorage.getItem('clickedProduct'));
+            if (!clickedProduct) return;
+    
+            const headers = {
+                'x-apikey': API_KEY,
+                'Content-Type': 'application/json'
+            };
+    
+            // Fetch reviews about the listing
+            const listingReviewsResponse = await fetch(
+                `${RESTDB_LISTINGS_URL}/reviews?q={"aboutIDOther":"${clickedProduct._id}"}`,
+                { headers }
+            );
+            const listingReviews = await listingReviewsResponse.json();
+    
+            // Fetch reviews about the seller
+            const sellerReviewsResponse = await fetch(
+                `${RESTDB_LISTINGS_URL}/reviews?q={"aboutIDMEMBER":"${clickedProduct.sellerID}"}`,
+                { headers }
+            );
+            const sellerReviews = await sellerReviewsResponse.json();
+    
+            // Fetch all accounts for author information
+            const accountsResponse = await fetch(
+                `${RESTDB_LISTINGS_URL}/accounts`,
+                { headers }
+            );
+            const accounts = await accountsResponse.json();
+    
+            // Combine and display reviews
+            displayReviews(listingReviews, sellerReviews, accounts);
+        } catch (error) {
+            console.error('Error fetching reviews:', error);
+        }
+    }
+    
+    function displayReviews(listingReviews, sellerReviews, accounts) {
+        const reviewsContainer = document.querySelector('.reviews-container');
+        const allReviews = [...listingReviews, ...sellerReviews];
+    
+        if (allReviews.length === 0) {
+            reviewsContainer.innerHTML = '<p>No reviews yet</p>';
+            return;
+        }
+    
+        const reviewsHTML = allReviews.map(review => {
+            const author = accounts.find(account => account._id === review.madebyID);
+            const authorName = author ? author.name : 'Anonymous';
+            const stars = '★'.repeat(review.stars) + '☆'.repeat(5 - review.stars);
+            const aboutText = review.aboutIDMEMBER ? 'Review about seller' : 'Review about listing';
+    
+            return `
+                <div class="review-item">
+                    <div class="review-header">
+                        <span class="review-author">${authorName}</span>
+                        <span class="review-stars">${stars}</span>
+                    </div>
+                    <div class="review-content">${review.review}</div>
+                    <div class="review-about">${aboutText}</div>
+                </div>
+            `;
+        }).join('');
+    
+        reviewsContainer.innerHTML = reviewsHTML;
+    }
+    
+    // Add this to your DOMContentLoaded event listener
+    document.addEventListener('DOMContentLoaded', () => {
+        // ... existing code ...
+        fetchReviews();
+    });
 });
