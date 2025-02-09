@@ -344,3 +344,49 @@ form button:hover {
         border-radius: 0;
     }
 }
+.reviews-section {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.reviews-section h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.review-item {
+    padding: 16px;
+    border-radius: 8px;
+    background: #f8fafc;
+    margin-bottom: 16px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.review-author {
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.review-stars {
+    color: #fbbf24;
+    font-size: 18px;
+}
+
+.review-content {
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+.review-about {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #6b7280;
+}
