@@ -7,83 +7,106 @@
     <link rel="stylesheet" href="help.css">
 </head>
 <body>
-
-    <header>
-        <div class="logo">
-            <img src="carousell-logo.png" alt="Carousell Logo">
-            <span>Help Centre</span>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="../assets/logo.svg" alt="MokeSell Logo">
+                <span>Help Centre</span>
+            </div>
+            <nav class="main-nav">
+            </nav>
         </div>
-        <nav>
-        </nav>
     </header>
 
     <section class="hero">
-        <div class="hero-content">
-            <h1>Hello! <br> How can we help you?</h1>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Search for articles">
-                <button>🔍</button>
-                <div class="search-dropdown" id="search-dropdown">
-                    <h3>Featured articles</h3>
-                    <ul id="search-results">
-                        <li><a href="../News/Supportteam.html">How do I contact the Support Team?</a></li>
-                        <li><a href="#">Can I have more than one MokeSell account?</a></li>
-                        <li><a href="#">What is Listing Quota</a></li>
-                        <li><a href="#">[Hong Kong] Category-based quota for all categories</a></li>
-                        <li><a href="#">[Singapore] My order is cancelled, how do I get my money back?</a></li>
-                        <li><a href="#">[Malaysia] My order is cancelled, how do I get my money back?</a></li>
-                    </ul>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Hello! <br> How can we help you?</h1>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search for articles">
+                        <button class="search-button">
+                            <span class="search-icon">🔍</span>
+                        </button>
+                    </div>
+                    <div class="search-dropdown" id="search-dropdown">
+                        <h3>Featured articles</h3>
+                        <ul id="search-results">
+                            <li><a href="articles/support-team.html">How do I contact the Support Team?</a></li>
+                            <li><a href="articles/multiple-accounts.html">Can I have more than one MokeSell account?</a></li>
+                            <li><a href="articles/listing-quota.html">What is Listing Quota</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="hero-image">
-            <img src="help-illustration.png" alt="Illustration">
+            <div class="image">
+                <img src="../images/5699712.webp" alt="Help Center Illustration">
+            </div>
         </div>
     </section>
+
+    
+
 
     <section class="topics">
-        <h2>Topics</h2>
-        <div class="topics-grid">
-            <div class="topic">
-                <img src="scams.png" alt="Scams and phishing">
-                <p>Guard against scams and phishing</p>
+        <div class="topics-container">
+            <h2>Topics</h2>
+            <!-- Default Grid View -->
+            <div class="topics-grid" id="defaultView">
+                <div class="topic-card" data-section="scams">
+                    <img src="../images/14568673242265.png" alt="Scams and phishing">
+                    <p>Guard against scams</p>
+                </div>
+                <div class="topic-card" data-section="chats">
+                    <img src="../assets/signifychatratingreview.svg" alt="Chats">
+                    <p>Chats, ratings and reviews</p>
+                </div>
+                <div class="topic-card" data-section="account">
+                    <img src="../assets/360002287633.svg" alt="Account">
+                    <p>My account</p>
+                </div>
+                <div class="topic-card" data-section="selling">
+                    <img src="../assets/360002281114.svg" alt="Selling">
+                    <p>Selling</p>
+                </div>
+                <div class="topic-card" data-section="buying">
+                    <img src="../assets/shirt.svg" alt="Buying">
+                    <p>Buying</p>
+                </div>
+                <div class="topic-card" data-section="payments">
+                    <img src="../assets/payment.svg" alt="Payments">
+                    <p>Payments, shipping & support</p>
+                </div>
+                <div class="topic-card" data-section="rules">
+                    <img src="../assets/rules.svg" alt="Rules">
+                    <p>Marketplace rules</p>
+                </div>
+                <div class="topic-card" data-section="troubleshooting">
+                    <img src="../assets/trouble.svg" alt="Troubleshooting">
+                    <p>Troubleshooting</p>
+                </div>
             </div>
-            <div class="topic">
-                <img src="chats.png" alt="Chats, ratings and reviews">
-                <p>Chats, ratings and reviews</p>
+    
+            <!-- Expanded View -->
+            <div class="expanded-view hidden" id="expandedView">
+                <div class="expanded-header">
+                    <h2 id="expandedTitle"></h2>
+                    <button class="back-button">
+                        <span class="arrow-left">←</span>
+                        Go back
+                    </button>
+                </div>
+                <div class="subsections" id="subsectionsList">
+                    <!-- Subsections will be populated by JavaScript -->
+                </div>
             </div>
-            <div class="topic">
-                <img src="account.png" alt="My account">
-                <p>My account</p>
-            </div>
-            <div class="topic">
-                <img src="selling.png" alt="Selling">
-                <p>Selling</p>
-            </div>
-            <div class="topic">
-                <img src="buying.png" alt="Buying">
-                <p>Buying</p>
-            </div>
-            <div class="topic">
-                <img src="payments.png" alt="Payments, shipping & post-purchase support">
-                <p>Payments, shipping & post-purchase support</p>
-            </div>
-            <div class="topic">
-                <img src="rules.png" alt="Marketplace rules">
-                <p>Marketplace rules</p>
-            </div>
-            <div class="topic">
-                <img src="troubleshooting.png" alt="Troubleshooting">
-                <p>Troubleshooting</p>
-            </div>
-            <a href="../contactus/contact.html" class="topic support">
-                <img src="support.png" alt="Carousell support">
-                <p>Carousell support</p>
+    
+            <a href="../contactus/contact.html" class="support-card">
+                <img src="../assets/support.svg" alt="Support">
+                <p>Contact Support Team</p>
             </a>
-
         </div>
     </section>
-    <script defer src="https://app.fastbots.ai/embed.js" data-bot-id="cm6w6l8rj0wkmsvk413k1jmh0"></script>
 
     <script src="help.js"></script>
 </body>

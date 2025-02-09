@@ -3,52 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mokesell Help Centre</title>
+    <title>Contact Support Team - MokeSell Help Centre</title>
     <link rel="stylesheet" href="supportteam.css">
 </head>
 <body>
-
     <header>
-        <img src="logo.png" alt="Mokesell Logo" class="logo">
-        <nav>
-            <a href="../help/help.html">Mokesell Help Centre</a> >
-            <a href="#">Mokesell Support</a> >
-        </nav>
+        <div class="header-container">
+            <img src="../assets/logo.svg" alt="MokeSell Logo" class="logo">
+            <nav class="breadcrumb">
+                <a href="../help/help.html">MokeSell Help Centre</a>
+                <span class="separator">›</span>
+                <a href="#">Contact Support Team</a>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <h1>How do I contact the Support Team?</h1>
+    <main class="content-container">
+        <article class="support-article">
+            <h1 class="article-title">How do I contact the Support Team?</h1>
 
-        <h2>Solving problems is a Core Value here at Mokesell</h2>
-        <p>We want all our Mokesellers to get the help they need quickly and efficiently. If you haven't already checked out 
-            the articles available on our Help Centre, we encourage you to do a quick article search to see if the answers you're looking for can be found!
-        </p>
+            <div class="article-content">
+                <h2>Solving problems is a Core Value here at MokeSell</h2>
+                
+                <p class="lead-text">We want all our MokeSellers to get the help they need quickly and efficiently. If you haven't already checked out 
+                    the articles available on our Help Centre, we encourage you to do a quick article search to see if the answers you're looking for can be found!</p>
 
-        <p>If you need further assistance, message us! <strong>Messaging Bot</strong> is available from Monday to Sunday for users in 
-            Hong Kong, Malaysia, Philippines, Singapore, and Taiwan. Select the floating message button** at the bottom right-hand 
-            corner of this page to start messaging us. Alternatively, we invite you to <a href="../contactus/contact.html">submit a request</a> to us – we'll be here to help!
-        </p>
+                <div class="info-box">
+                    <p>If you need further assistance, message us! <strong>Messaging Bot</strong> is available from Monday to Sunday for users in 
+                        Hong Kong, Malaysia, Philippines, Singapore, and Taiwan. Select the floating message button at the bottom right-hand 
+                        corner of this page to start messaging us. Alternatively, we invite you to <a href="../contactus/contact.html" class="primary-link">submit a request</a> to us – we'll be here to help!</p>
+                </div>
 
-        <p class="note"><strong>** Please check if there is any ad-blocking extension enabled in your browser, as it may block the message button from showing up.</strong></p>
+                <p class="alert-message">
+                    <strong>Note:</strong> Please check if there is any ad-blocking extension enabled in your browser, as it may block the message button from showing up.
+                </p>
 
-        <section>
-            <h3>To ensure that all our Mokesellers experience the best support possible, here are some useful tips to help us solve your problems quicker:</h3>
-            <ul>
-                <li><strong>If you're facing technical problems on the app,</strong> make sure that you're on the latest version of the app and try out these <a href="#">troubleshooting steps</a>.</li>
-                <li><strong>If you're having problems dealing with a buyer or seller,</strong> always provide a background of the issue along with the other party's Mokesell username and listing title when reporting a user.</li>
-                <li><strong>If you see a listing that is not in line with our Listing Rules,</strong> here is how you can <a href="#">report a listing</a>.</li>
-                <li><strong>If you simply have an idea or a suggestion to improve our app,</strong> we want to hear anything and everything from our community that will help us solve problems and continuously improve the Mokesell product.</li>
-            </ul>
+                <section class="tips-section">
+                    <h3>To ensure that all our MokeSellers experience the best support possible, here are some useful tips to help us solve your problems quicker:</h3>
+                    
+                    <ul class="tips-list">
+                        <li>
+                            <strong>If you're facing technical problems on the app,</strong>
+                            make sure that you're on the latest version of the app and try out these <a href="#" class="primary-link">troubleshooting steps</a>.
+                        </li>
+                        <li>
+                            <strong>If you're having problems dealing with a buyer or seller,</strong>
+                            always provide a background of the issue along with the other party's MokeSell username and listing title when reporting a user.
+                        </li>
+                        <li>
+                            <strong>If you see a listing that is not in line with our Listing Rules,</strong>
+                            here is how you can <a href="#" class="primary-link">report a listing</a>.
+                        </li>
+                        <li>
+                            <strong>If you simply have an idea or a suggestion to improve our app,</strong>
+                            we want to hear anything and everything from our community that will help us solve problems and continuously improve the MokeSell product.
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </article>
+
+        <section class="feedback-section">
+            <p>Was this article helpful?</p>
+            <div class="feedback-buttons">
+                <button class="feedback-btn positive" id="yes-btn">
+                    <span class="icon">✓</span>
+                    Yes
+                </button>
+                <button class="feedback-btn negative" id="no-btn">
+                    <span class="icon">×</span>
+                    No
+                </button>
+            </div>
         </section>
     </main>
 
-    <section class="feedback">
-        <p>Was this article helpful?</p>
-        <button class="feedback-btn" id="yes-btn">✔ Yes</button>
-        <button class="feedback-btn" id="no-btn">✖ No</button>
-    </section>
     <script src="supportteam.js"></script>
-    
-
 </body>
 </html>
