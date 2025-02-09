@@ -164,6 +164,7 @@ nav ul li a {
     }
 }
 /* Search Box */
+/* Search Box */
 .search-box {
     position: relative;
     display: flex;
@@ -172,7 +173,7 @@ nav ul li a {
     padding: 5px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    width: 300px;
+    width: 550px; /* Adjusted from 300px to 350px */
 }
 
 .search-box input {
@@ -189,6 +190,8 @@ nav ul li a {
     font-size: 18px;
     padding: 5px;
 }
+
+
 
 /* Search Dropdown */
 .search-dropdown {
@@ -270,4 +273,12 @@ body {
 .bot {
   text-align: left; /* Align bot messages to the left */
   color: green;
+}
+
+.topic a, 
+.topic a:visited, 
+.topic a:hover, 
+.topic a:active {
+    color: black !important; /* Forces black color */
+    text-decoration: none !important; /* Removes underline */
 }

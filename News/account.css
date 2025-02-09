@@ -1,0 +1,29 @@
+.feedback {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.feedback p {
+    font-size: 16px;
+    color: #333;
+}
+
+.feedback-btn {
+    border: 1px solid #007bff;
+    background: none;
+    color: #007bff;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.feedback-btn:hover {
+    background: #007bff;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
