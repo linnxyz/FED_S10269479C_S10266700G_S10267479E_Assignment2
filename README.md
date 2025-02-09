@@ -205,7 +205,7 @@ To help buyers plan their travel, we provide an input field where they can enter
 <input  type="text"  id="origin"  placeholder="Enter an address to calculate distance from the meet up location"  required  />
 <button  type="submit">Calculate Distance</button>
 ```
-We used **Google Places Autocomplete API** in the create listing (sell.html) as well. To read more about how it works, [Go to Create Listing RestDB Implementation](#fundamentals-of-restdb)
+We used **Google Places Autocomplete API** in the create listing (sell.html) as well. To read more about how it works, [Go to Create Listing (sell.html)](#3-create-listing-sellhtml)
  
 #### Calculating Distance and Travel Time
 
@@ -258,7 +258,7 @@ In above code:
 
 ### Sending listing data to RestDB
 
-[Go to SCOTT (sell.html)](#3-create-listing-sellhtml)
+[Go to Create Listing RestDB Implementation by Scott](#fundamentals-of-restdb)
 
 ## 4. Log In / Register (login.html)
 
@@ -334,6 +334,8 @@ The **Referral Link** feature is designed to encourage users to invite others to
  - [x] **Referral Landing Page**: The code recognizes the id in the URL and shows a pop up to process further advantages for both, the referrer and the referee.
     
  - [ ] **Tracking Referrals**: On the back-end, the referral ID can be used to track which user referred a new visitor. The referred user may receive rewards (e.g., discounts) for signing up through the referral link. (TO BE IMPLEMENTED)
+
+---
  
 ## Fundamentals of RestDB
 **Contributor/Author**:Tan Si Ming Scott
