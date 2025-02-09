@@ -563,4 +563,224 @@ The function `handleListingSubmit(event)` is responsible for handling the submis
     
     -   Uses the **POST** method to send the listing details to the database along with image URLs.
 
+## 1. Help Center ( search function )
+**Contributor/Author**: Chin Cheng Jun Alson
 
+The  **Help Centre**  serves as the main support hub for the MokeSell platform. This page is thoughtfully designed to provide quick and efficient assistance to users.The page features a prominent search bar at the top with the welcoming message "Hello! How can we help you?", making it easy for users to quickly find specific help articles. This search-centric approach helps users get immediate answers to their questions and find articals relating to their inquery. 
+
+```javascript
+// Core filtering functions
+const articles = [
+    {
+        title: "How do I contact the Support Team?",
+        url: "../News/Supportteam.html",
+        keywords: ["contact", "support", "help", "team"]
+    },
+    {
+        title: "Can I have more than one MokeSell account?",
+        url: "../News/account.html",
+        keywords: ["account", "multiple", "create"]
+    },
+    {
+        title: "What is Listing Quota",
+        url: "../News/quota.html",
+        keywords: ["listing", "quota", "limit", "sell"]
+    }
+];
+
+// Filter articles based on search input
+searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const filteredArticles = filterArticles(searchTerm);
+    displayResults(filteredArticles);
+});
+
+// Filter articles based on search term
+function filterArticles(searchTerm) {
+    if (!searchTerm) return articles;  // If search is empty, return all articles
+    
+    return articles.filter(article => {
+        const titleMatch = article.title.toLowerCase().includes(searchTerm);
+        const keywordMatch = article.keywords.some(keyword => 
+            keyword.toLowerCase().includes(searchTerm)
+        );
+        return titleMatch || keywordMatch;  // Return true if term matches title OR keywords
+    });
+}
+
+// Display filtered results
+function displayResults(filteredArticles) {
+    searchResults.innerHTML = '';
+    
+    if (filteredArticles.length === 0) {
+        searchResults.innerHTML = '<li class="no-results">No articles found</li>';
+        return;
+    }
+
+    filteredArticles.forEach(article => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = article.url;
+        a.textContent = article.title;
+        li.appendChild(a);
+        searchResults.appendChild(li);
+    });
+}
+```
+
+
+In the above code:
+
+- An array is created to hold attributes such as  title, the article heading, url: Link to the article, keywords: Related search terms.
+- When a user types in the search input,  the input event listener captures the text , Converts it to lowercase for case-insensitive matching and Calls filterArticles() with the search term.
+-   The filterArticles() function returns all articles if search term is empty , otherwise filters articles based on two criteria: If the search term matches the article title and If the search term matches any of the article keywords.
+-   The displayResults() function clears the previous results, shows "No articles found" if no matches and creates clickable links for each matching article
+
+
+
+## 2. Drop down menu for search
+**Contributor/Author**: Chin cheng jun Alson
+
+The dropdown menu for search helps users navigate the different articles in the search bar. Users can find relavant articles to help aid them in their query.
+
+
+
+```javascript
+// Get DOM elements
+const searchInput = document.getElementById('search-input');
+const searchDropdown = document.getElementById('search-dropdown');
+const searchResults = document.getElementById('search-results');
+
+
+searchInput.addEventListener('click', () => {
+    searchDropdown.style.display = 'block';  
+    displayResults(articles);  
+});
+
+
+document.addEventListener('click', (event) => {
+    if (!searchInput.contains(event.target) && !searchDropdown.contains(event.target)) {
+        searchDropdown.style.display = 'none';  
+    }
+});
+```
+
+In code above: 
+   - searchInput.addEventListener() triggers when the user clicks on the search input box. It makes the dropdown visible base on (`style.display = 'block'`) and it shows all articles in the dropdown (`displayResults(articles)`)
+   -   Initially shows all articles as "featured articles"
+   - document.addEventListener() helps hide the dropdown menu through a condition. It checks for when user click is not inside the search input (`!searchInput.contains(event.target)` and click is not inside the dropdown (`!searchDropdown.contains(event.target)`). If both conditions are true it hides the dropdown (`style.display = 'none'`)
+
+## **3. Visual Communication**   ( topics )
+**Contributor/Author**: Chin cheng jun Alson
+
+Each topic is represented by a distinct icon, making the categories easily identifiable and visually appealing. The page also features a friendly illustration showing support staff, which adds a human touch to the help experience.
+
+```javascript
+
+const topicCards=document.querySelectorAll('.topic-card');
+topicCards.forEach(card  => {
+card.addEventListener('click', () => {
+const  sectionId  =  card.dataset.section;
+expandSection(sectionId);
+
+});
+
+});
+
+backButton.addEventListener('click', () => {
+defaultView.classList.remove('hidden');
+expandedView.classList.add('hidden');
+});
+function  expandSection(sectionId) {
+const  section  =  sections[sectionId];
+if (!section) return;
+expandedTitle.textContent  =  section.title;
+subsectionsList.innerHTML  =  section.subsections
+.map(subsection  =>  `
+<div class="subsection-item">
+<p class="info-text">${subsection}</p>
+</div>
+
+`)
+.join('');
+defaultView.classList.add('hidden');
+
+expandedView.classList.remove('hidden');
+
+}
+
+});
+```
+In this code above:
+ - When a topic card is clicked, it retrieves the `data-section` attribute of the clicked card and calls the `expandSection(sectionId)` function.
+ - function expandSection( sectionId ) retrieves the section from the `sections` object using `sectionId`.If `section` doesn’t exist (`undefined`), the function stops -(`return`).
+ - subsectionsList.innerHTML section maps through the `subsections` array inside the section.Wraps each `subsection` in a `<div>` with a `<p>` to display the content.Joins everything into a single string and updates `subsectionsList`.
+
+
+## 4. Chat bot 
+**Contributor/Author**: Chin cheng jun Alson
+
+An ai assisntant equip with MokeSell policies, help customer's inquery and provide a solution to their probelms and answer their questions.
+
+```javascript
+<script  defer  src="https://app.fastbots.ai/embed.js"  data-bot-id="cm6w6l8rj0wkmsvk413k1jmh0"></script>'
+```
+
+In the code above:
+- Contains an external link to fastbots.ai.  It is a wepsite equiped with personal ai assistant to be implimented in websites jus like MokeSell
+-  Tuned the virtual assistant to understand that MokeSell is a platform where users can sell and buy second-hand electronics as well as follow regulations that i have typed to potentially solve customers problems.
+
+
+
+
+## 5. Contact Us
+
+**Contributor/Author**: Chin cheng jun Alson
+
+A form where users can submit inquery if they do not find the apporpriate solutions to fix their problems. Users can write up their issues which will be sent to MokeSell Data base where their inquery will be reviewed by MokeSell technical experts to tackle on their case.
+
+```javascript
+const firstName = document.getElementById("firstName").value;
+const lastName = document.getElementById("lastName").value;
+const email = document.getElementById("email").value;
+const phone = document.getElementById("phone").value;
+const topic = document.getElementById("topic").value;
+const inquiry = document.getElementById("message").value;
+
+const contactData = {
+  firstname: firstName,
+  lastname: lastName,
+  email: email,
+  phonenum: phone,
+  topic: topic,
+  inquiry: inquiry
+};
+
+fetch("https://mokesellcustomers-cfe3.restdb.io/rest/contact", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "x-apikey": "677f31d996bc7400895f1141", 
+    "Cache-Control": "no-cache"
+  },
+  body: JSON.stringify(contactData)
+})
+  .then(response => response.json())
+  .then(data => {
+    alert("Your message has been sent!");
+    form.reset(); 
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("An error occurred. Please try again.");
+  });
+});
+```
+
+In the code above:
+- Gets user input from form fields by selecting elements using their `id` (`getElementById`).Extracts the `value` from each field, meaning whatever the user typed into the form.
+- Stores the collected form data inside an object called `contactData`.This will be sent to the RestDB database as a JSON request.
+- Fetch() sends a request to RestDB’s API  at the specified URL. Uses the `POST` method, which means data is sending instead of  retrieving data.
+- Headers tell the server how to handle the request. `"Content-Type": "application/json"` ensures json data is sent
+- `"Cache-Control": "no-cache"`  ensures the request isn’t cached.
+- Validations are also implimented to catch any errors for example console will write error if there is a problem sending the data to RESTDB.
