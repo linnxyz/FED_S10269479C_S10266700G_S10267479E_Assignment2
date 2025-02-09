@@ -1,102 +1,131 @@
-// Initialize the dropdowns (not related to the issue, but just in case it's relevant)
+// Initialize dropdowns when clicked
 function initializeDropdowns() {
-    const profileDropdown = document.querySelector('.profile.dropdown');
-    const notificationDropdown = document.querySelector('.notification.dropdown');
+    document.addEventListener("click", (event) => {
+        const isDropdown = event.target.closest(".dropdown");
+        const isModal = event.target.closest("#referModal"); // Check if clicking inside modal
 
-    if (profileDropdown) {
-        profileDropdown.addEventListener('click', (e) => {
-            toggleDropdown(profileDropdown);
-            e.stopPropagation();
-        });
-    }
+        // Close all dropdowns if clicking outside and NOT inside the modal
+        if (!isModal) {
+            document.querySelectorAll(".dropdown-content").forEach((dropdown) => {
+                if (!isDropdown || dropdown !== isDropdown.querySelector(".dropdown-content")) {
+                    dropdown.classList.remove("show");
+                }
+            });
 
-    if (notificationDropdown) {
-        notificationDropdown.addEventListener('click', (e) => {
-            toggleDropdown(notificationDropdown);
-            e.stopPropagation();
-        });
-    }
-    document.addEventListener('click', closeAllDropdowns);
+            // Toggle dropdown if clicking inside it
+            if (isDropdown) {
+                const dropdownContent = isDropdown.querySelector(".dropdown-content");
+                if (dropdownContent) {
+                    dropdownContent.classList.toggle("show");
+                }
+            }
+        }
+    });
 }
 
-function toggleDropdown(dropdown) {
-    const allDropdowns = document.querySelectorAll('.dropdown-content');
-    allDropdowns.forEach(content => {
-        if (content !== dropdown.querySelector('.dropdown-content')) {
-            content.classList.remove('show');
+// Open Refer a Friend Modal
+function openReferModal() {
+    const modal = document.getElementById("referModal");
+    const input = document.getElementById("referralLink");
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (modal) {
+        modal.style.display = "flex";
+        document.body.classList.add("modal-open"); // Prevent background scrolling
+    }
+
+    // Generate referral link with user ID
+    if (input && user && user.id) {
+        input.value = `http://127.0.0.1:5501/index.html?id=${user.id}`;
+    } else {
+        input.value = "User ID not found!";
+    }
+}
+
+// Close Refer a Friend Modal
+function closeReferModal() {
+    const modal = document.getElementById("referModal");
+    if (modal) {
+        modal.style.display = "none";
+        document.body.classList.remove("modal-open"); // Restore background scrolling
+    }
+}
+
+// Copy Referral Link to Clipboard
+function copyReferral() {
+    const input = document.getElementById("referralLink");
+    if (input) {
+        navigator.clipboard.writeText(input.value) // Modern method for copying
+            .then(() => alert("Referral link copied!"))
+            .catch((err) => console.error("Failed to copy: ", err));
+    }
+}
+
+// Attach modal event listeners
+function attachModalListeners() {
+    const modal = document.getElementById("referModal");
+    const closeBtn = document.querySelector(".close");
+    const copyBtn = document.getElementById("copyLink");
+    const referLink = document.getElementById("referFriend");
+
+    if (modal) modal.style.display = "none"; // Hide modal initially
+
+    if (referLink) {
+        referLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            openReferModal();
+        });
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeReferModal);
+    }
+
+    // Close modal when clicking outside of it
+    window.addEventListener("click", (event) => {
+        if (modal && event.target === modal) {
+            closeReferModal();
         }
     });
 
-    const content = dropdown.querySelector('.dropdown-content');
-    if (content) {
-        content.classList.toggle('show');
+    if (copyBtn) {
+        copyBtn.addEventListener("click", copyReferral);
     }
 }
 
-function closeAllDropdowns(event) {
-    if (!event.target.closest('.dropdown')) {
-        const dropdowns = document.querySelectorAll('.dropdown-content');
-        dropdowns.forEach(dropdown => {
-            dropdown.classList.remove('show');
-        });
-    }
-}
-
-// Function to load and inject the navbar, and display the username if available
+// Load and inject navbar
 async function loadNavbar() {
     try {
-        const response = await fetch("/nav/navbar.html");  // Load the navbar HTML
-        const data = await response.text();  // Get the HTML content
+        const response = await fetch("/nav/navbar.html");
+        const data = await response.text();
 
-        const nav = document.querySelector("nav");  // Select the <nav> element
-        if (nav) {
-            nav.innerHTML = data;  // Inject the navbar HTML into the <nav> element
+        const nav = document.querySelector("nav");
+        if (!nav) return;
 
-            // Check if user data is stored in localStorage
+        nav.innerHTML = data;
+
+        setTimeout(() => {
             const user = JSON.parse(localStorage.getItem("user"));
-
-            // Get the login button from the navbar
+            const usernameElement = nav.querySelector("#username");
             const loginButton = nav.querySelector(".login");
+            const navIcons = nav.querySelector(".nav-icons");
 
             if (user) {
-                // User is logged in, update the username element
-                const usernameElement = nav.querySelector("#username");  // Find the username element by ID
-                if (usernameElement) {
-                    usernameElement.textContent = user.name;  // Set the username text
-                }
-
-                // Show nav icons (if you have them)
-                const navIcons = nav.querySelector(".nav-icons");
-                if (navIcons) {
-                    navIcons.style.display = "flex";
-                }
-
-                // Hide the login button when the user is logged in
-                if (loginButton) {
-                    loginButton.style.display = "none";  // Hide the login button
-                }
-
+                if (usernameElement) usernameElement.textContent = user.name;
+                if (navIcons) navIcons.style.display = "flex";
+                if (loginButton) loginButton.style.display = "none";
             } else {
-                // User is not logged in, hide nav icons
-                const navIcons = nav.querySelector(".nav-icons");
-                if (navIcons) {
-                    navIcons.style.display = "none";
-                }
-
-                // Show the login button when the user is not logged in
-                if (loginButton) {
-                    loginButton.style.display = "block";  // Show the login button
-                }
+                if (navIcons) navIcons.style.display = "none";
+                if (loginButton) loginButton.style.display = "block";
             }
 
-            initializeDropdowns();  // Reinitialize dropdowns
-        }
+            initializeDropdowns();
+            attachModalListeners(); // Attach modal event listeners AFTER navbar loads
+        }, 100);
     } catch (error) {
-        console.error("Error loading navbar:", error);  // Handle any errors
+        console.error("Error loading navbar:", error);
     }
 }
 
-
-
-// Call loadNavbar when the page is loaded
-window.addEventListener('load', loadNavbar);
+// Load navbar on page load
+window.addEventListener("load", loadNavbar);
