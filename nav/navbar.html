@@ -41,14 +41,28 @@
                         <path d="M11.9998 15.5C11.7372 15.5005 11.4771 15.449 11.2345 15.3486C10.9918 15.2483 10.7714 15.1009 10.5858 14.915L5.29285 9.62103L6.70685 8.20703L11.9998 13.5L17.2928 8.20703L18.7068 9.62103L13.4138 14.914C13.2284 15.1001 13.008 15.2476 12.7653 15.3482C12.5227 15.4488 12.2625 15.5004 11.9998 15.5Z" fill="#bdbdbd"/>
                     </svg>
                 </div>
+                <!-- Dropdown Menu -->
                 <div class="dropdown-content">
                     <a href="../profile/profile.html">Profile</a>
                     <a href="#">About us</a>
                     <a href="#">Settings</a>
                     <a href="#">Orders</a>
-                    <a href="#">Help Center</a>
+                    <a href="#" id="referFriend">Refer a friend</a>
+                    <a href="../help/help.html">Help Center</a>
                     <a href="../logIn/login.html">Logout</a>
                 </div>
+
+                <!-- Pop-up Modal -->
+                <div id="referModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Refer a Friend</h2>
+                        <p>Invite your friends and get rewards!</p>
+                        <input type="text" id="referralLink" readonly value="https://mokesell.com/referral?code=XYZ123">
+                        <button id="copyLink">Copy Link</button>
+                    </div>
+                </div>
+
             </div>
     
 

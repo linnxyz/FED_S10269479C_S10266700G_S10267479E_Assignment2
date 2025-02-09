@@ -1,5 +1,5 @@
- const RESTDB_API_KEY = '677f31d996bc7400895f1141';
- const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings?';
+const RESTDB_API_KEY = '677f31d996bc7400895f1141';
+const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings?';
 let page = 1;
 let loading = false;
 let hasMore = true;
@@ -380,6 +380,44 @@ document.addEventListener('DOMContentLoaded', function() {
     handleScroll();
     window.addEventListener('scroll', handleScroll);
 });
+
+window.addEventListener('load', function () {
+    // Check for referral ID in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const referralID = urlParams.get('id'); // Match the actual URL param name
+
+
+    // Show the referral pop-up if referralID exists in the URL
+    if (referralID) {
+        showReferralPopup(referralID);
+    }
+
+    // Log the full URL for debugging
+    console.log("Current URL:", window.location.href);
+});
+
+// Function to show the pop-up
+function showReferralPopup(referralID) {
+    const popup = document.getElementById('referral-popup');
+    popup.style.display = 'flex';
+
+    // Save referralID to localStorage or sessionStorage if needed
+    localStorage.setItem('referralID', referralID);
+
+    // Display the referral ID (for debugging or UI)
+    console.log("Referral ID:", referralID);
+
+    // Event listener for "Create Account" button
+    document.getElementById('createAccountBtn').addEventListener('click', function () {
+        // Redirect to the account creation page
+        window.location.href = '../logIn/login.html';  // Replace with your actual sign-up page
+    });
+
+    // Event listener for "Close" button
+    document.getElementById('closePopupBtn').addEventListener('click', function () {
+        popup.style.display = 'none';
+    });
+}
 
 
 
