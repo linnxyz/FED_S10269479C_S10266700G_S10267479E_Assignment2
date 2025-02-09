@@ -226,3 +226,17 @@
 #copyLink:hover {
     background: #372ad3;
 }
+
+.sell-icon {
+    background-color: rgb(255, 230, 230);
+    color: #ff0505;
+    text-decoration: none;
+    padding: 8px 25px;
+    border-radius: 5px;
+    border: 1px solid rgb(255, 163, 163);
+}
+
+.sell-icon svg {
+    margin-right: 10px;
+    margin-bottom: 4px;
+}

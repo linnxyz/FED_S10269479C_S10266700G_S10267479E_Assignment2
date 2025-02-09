@@ -36,6 +36,17 @@ tabs.forEach(tab => {
     });
 });
 
+function sanitizeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+
+function truncateText(text, charLimit) {
+    return text.length > charLimit ? text.substring(0, charLimit) + "..." : text;
+}
+
 // Fetch user's listings from RestDB
 async function fetchUserListings() {
     try {

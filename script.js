@@ -1,5 +1,5 @@
-const RESTDB_API_KEY = '677f31d996bc7400895f1141';
-const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings?';
+// const RESTDB_API_KEY = '677f31d996bc7400895f1141';
+// const RESTDB_URL = 'https://mokesellcustomers-cfe3.restdb.io/rest/listings?';
 let page = 1;
 let loading = false;
 let hasMore = true;
