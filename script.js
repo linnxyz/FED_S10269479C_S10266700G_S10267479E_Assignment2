@@ -21,7 +21,9 @@ function createProductCard(product) {
         likes: parseInt(product.likes) || 0,
         dealLocation: sanitizeHTML(product.dealLocation),
         sellerID: sanitizeHTML(product.sellerID),
-        sellerName: sanitizeHTML(product.sellerName)
+        sellerName: sanitizeHTML(product.sellerName),
+        coverImage: sanitizeHTML(product.coverImage),
+        images: sanitizeHTML(product.images)
     };
 
     return `
@@ -35,8 +37,9 @@ function createProductCard(product) {
             data-likes="${sanitizedProduct.likes}"
             data-deal-location="${sanitizedProduct.dealLocation}"
             data-seller-id="${sanitizedProduct.sellerID}"
-            data-seller-name="${sanitizedProduct.sellerName}">
-            <div class="product-image"></div>
+            data-seller-name="${sanitizedProduct.sellerName}"
+            data-images="${sanitizedProduct.images}">
+            <div class="product-image" style="background-image: url('${sanitizedProduct.coverImage}')"></div>
             <div class="product-info">
                 <div id="listingID"></div>
                 <div class="product-header">
@@ -303,7 +306,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 likes: card.dataset.likes,
                 location: card.dataset.dealLocation,
                 sellerID: card.dataset.sellerId,
-                sellerName: card.dataset.sellerName
+                sellerName: card.dataset.sellerName,
+                images: card.dataset.images
             };
             localStorage.setItem('clickedProduct', JSON.stringify(clickedProduct));
             // Redirect to the product page
@@ -376,6 +380,44 @@ document.addEventListener('DOMContentLoaded', function() {
     handleScroll();
     window.addEventListener('scroll', handleScroll);
 });
+
+window.addEventListener('load', function () {
+    // Check for referral ID in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const referralID = urlParams.get('id'); // Match the actual URL param name
+
+
+    // Show the referral pop-up if referralID exists in the URL
+    if (referralID) {
+        showReferralPopup(referralID);
+    }
+
+    // Log the full URL for debugging
+    console.log("Current URL:", window.location.href);
+});
+
+// Function to show the pop-up
+function showReferralPopup(referralID) {
+    const popup = document.getElementById('referral-popup');
+    popup.style.display = 'flex';
+
+    // Save referralID to localStorage or sessionStorage if needed
+    localStorage.setItem('referralID', referralID);
+
+    // Display the referral ID (for debugging or UI)
+    console.log("Referral ID:", referralID);
+
+    // Event listener for "Create Account" button
+    document.getElementById('createAccountBtn').addEventListener('click', function () {
+        // Redirect to the account creation page
+        window.location.href = '../logIn/login.html';  // Replace with your actual sign-up page
+    });
+
+    // Event listener for "Close" button
+    document.getElementById('closePopupBtn').addEventListener('click', function () {
+        popup.style.display = 'none';
+    });
+}
 
 
 
